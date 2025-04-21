@@ -56,7 +56,7 @@ cache
 
 ## TheoremAug
 
-This augmentation dataset for the reasoning-intensive retrieval task (e.g., searching math and physics solutions) is constructed using GPT4o-mini. We prompt the LLM to generate question-solution pairs related to a given list of theorems. Theorems include math, physics, finance, and code. The dataset is available at Huggingface [samaya-ai/msmarco-w-instructions](https://huggingface.co/datasets/samaya-ai/msmarco-w-instructions/viewer/default/train?row=1).
+This augmentation dataset for the reasoning-intensive retrieval task (e.g., searching math and physics solutions) is constructed using GPT4o-mini. We prompt the LLM to generate question-solution pairs related to a given list of theorems. Theorems include math, physics, finance, and code. The dataset is available at Huggingface [TheoremAug](https://huggingface.co/siyue).
 
 <p align="center">
   <img src="https://github.com/siyue-zhang/diffusion_embedder/blob/master/assets/gen.png" width="80%" alt="gen"/>
@@ -71,7 +71,7 @@ LLM2Vec class is a wrapper on top of HuggingFace models to support enabling bidi
 We conduct supervised contrastive training for Dream for instruction-following retrieval, long-document retrieval, and reasoning-intensive retrieval. For each task, we will finetune the base language models (e.g., Dream) with one training dataset using LoRA.
 - instruction-following retrieval: [msmarco-w-instructions](https://huggingface.co/datasets/samaya-ai/msmarco-w-instructions/viewer/default/train?row=1)
 - long-document retrieval: [Public E5](https://huggingface.co/datasets/dwzhu/LongEmbed)
-- reasoning-intensive retrieval: [TheoremAug]()
+- reasoning-intensive retrieval: [TheoremAug](https://huggingface.co/siyue)
 
 Dataset statistics are shown below.
 <p align="center">
