@@ -14,7 +14,7 @@ We demonstrate that Diffusion LM embeddings achieve comparable or better perform
   <img src="https://github.com/siyue-zhang/diffusion_embedder/blob/master/assets/main.png" width="80%" alt="figure1"/>
 </p>
 
-This project is implemented based on the code from [LLM2Vec](https://github.com/McGill-NLP/llm2vec/) project, big thanks to the authors.
+This project is implemented based on the code from [LLM2Vec](https://github.com/McGill-NLP/llm2vec/) project and the [Dream](https://github.com/HKUNLP/Dream) model, big thanks to the authors.
 
 ## Installation
 To use Diffusion Embedder, you can clone this repository and follow these steps:
