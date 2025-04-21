@@ -84,7 +84,7 @@ torchrun --nproc_per_node=4 experiments/run_supervised.py train_configs/supervis
 ```
 LLM2Vec adopts in-batch negatives as default. We haved added a RepllamaLoss (mimicing [Tevatron](https://github.com/texttron/tevatron/blob/main/src/tevatron/retriever/tevax/loss.py) loss calculation) to disable in-batch negatives and support explict negative documents. This is designed to fit the samples of msmarco-w-instructions.
 
-> Hints: do remeber to check the GPU ids set in experiments/run_supervised.py.
+> Hints: remeber to check the GPU ids set in experiments/run_supervised.py.
 
 ### Evaluate
 
@@ -103,7 +103,7 @@ python experiments/mteb_eval_custom.py \
 --batch_size 128
 ```
 
-> Hints: do remeber to check the GPU ids set in experiments/experiments/mteb_eval_custom.py.
+> Hints: remeber to check the GPU ids set in experiments/experiments/mteb_eval_custom.py.
 
 
 

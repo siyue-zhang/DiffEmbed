@@ -1,3 +1,26 @@
+build/
+dist/
+*.egg-info
+**/__pycache__
+wandb/**
+output/**
+cache/**
+output/**
+*.log
+cluster_scripts/**
+backup/**
+wandb/**
+TheoremAug/output/**
+ext3/**
+results/**
+qwen_results/**
+wandb/**
+dream/**
+fast_results/**
+
+
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
