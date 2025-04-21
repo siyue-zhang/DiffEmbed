@@ -1,9 +1,13 @@
 {
-    "model_name_or_path": "meta-llama/Meta-Llama-3-8B-Instruct",
-    "peft_model_name_or_path": "McGill-NLP/Meta-Llama-3-8B-Instruct-mntp",
+    "model_name_or_path": "mistralai/Mistral-7B-Instruct-v0.2",
+    "peft_model_name_or_path": "McGill-NLP/LLM2Vec-Mistral-7B-Instruct-v2-mntp",
     "bidirectional": true,
     "pooling_mode": "mean",
-    "dataset_name": "E5",
+    "dataset_name": "E5Mix",
+    "aug_file_path": "cache/TheoremAug.jsonl",
+    "domain": "all",
+    "task":"all",
+    "add_e5": false,
     "dataset_file_path": "cache/echo-data",
     "remove_unused_columns": false,
     "learning_rate": 5e-5,
@@ -18,7 +22,7 @@
     "doc_max_length": 4096,
     "skip_instruction": false,
     "overwrite_output_dir": true,
-    "output_dir": "output/Meta-Llama-3-8B-Instruct-mntp-e5",
+    "output_dir": "output/Mistral-7B-Instruct-mntp-TheoremAug",
     "logging_steps": 20,
     "save_steps": 500,
     "save_only_model": true,
@@ -29,6 +33,6 @@
     "attn_implementation": "flash_attention_2",
     "seed": 42,
     "report_to": ["wandb"],
-    "run_name": "Meta-Llama-3-8B-Instruct-mntp-e5",
+    "run_name": "Mistral-7B-Instruct-mntp-TheoremAug",
     "loss_class": "HardNegativeNLLLoss"
 }
