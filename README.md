@@ -56,7 +56,7 @@ cache
 
 ## TheoremAug
 
-This augmentation dataset for the reasoning-intensive retrieval task (e.g., searching math and physics solutions) is constructed using GPT4o-mini. We prompt the LLM to generate problem-solution pairs related to a given list of theorems. Theorems include math, physics, finance, and code. The problem-solution pairs for the same theorem are positive document for each other. The problem-solution pairs for different theorems are negative document for each other.
+This augmentation dataset for the reasoning-intensive retrieval task (e.g., searching math and physics solutions) is constructed using GPT4o-mini. We prompt the LLM to generate question-solution pairs related to a given list of theorems. Theorems include math, physics, finance, and code. The question-solution pairs for the same theorem are positive document for each other. The question-solution pairs for different theorems are negative document for each other.
 
 <p align="center">
   <img src="https://github.com/siyue-zhang/diffusion_embedder/blob/master/assets/gen.png" width="80%" alt="gen"/>
