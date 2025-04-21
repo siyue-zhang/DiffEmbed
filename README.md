@@ -62,7 +62,27 @@ LLM2Vec class is a wrapper on top of HuggingFace models to support enabling bidi
 
 ### Train
 
-We conduct supervised contrastive training for Dream for instruction-following retrieval, long-document retrieval, and reasoning-intensive retrieval.
+We conduct supervised contrastive training for Dream for instruction-following retrieval, long-document retrieval, and reasoning-intensive retrieval. For each task, we will finetune the base language models (e.g., Dream) with one training dataset using LoRA.
+- instruction-following retrieval: [msmarco-w-instructions](https://huggingface.co/datasets/samaya-ai/msmarco-w-instructions/viewer/default/train?row=1)
+- long-document retrieval: [Public E5](https://huggingface.co/datasets/dwzhu/LongEmbed)
+- reasoning-intensive retrieval: [TheoremAug]()
+
+Dataset statistics are shown below.
+<p align="center">
+  <img src="" width="75%" alt="table"/>
+</p>
+
+To train the Meta-Llama-3-8B model with supervised contrastive learning, run the following command:
+```
+torchrun --nproc_per_node=4 experiments/run_supervised.py train_configs/supervised/MetaLlama3.json
+```
+Similarly, to train Dream for instruction-following retrieval:
+```
+torchrun --nproc_per_node=4 experiments/run_supervised.py train_configs/supervised/Dream_if.json
+```
+LLM2Vec adopts in-batch negatives as default. We haved added a RepllamaLoss (mimicing [Tevatron](https://github.com/texttron/tevatron/blob/main/src/tevatron/retriever/tevax/loss.py) loss calculation) to disable in-batch negatives and support explict negative documents. This is designed to fit the samples of msmarco-w-instructions.
+
+> Hints: do remeber to check the GPU ids set in experiments/run_supervised.py.
 
 ### Evaluate
 
@@ -70,6 +90,18 @@ We test the retrieval performance on following benchmarks using MTEB implementat
 - instruction-following retrieval: [FollowIR](https://huggingface.co/jhu-clsp)
 - long-document retrieval: [LongEmbed](https://huggingface.co/datasets/dwzhu/LongEmbed)
 - reasoning-intensive retrieval: [BRIGHT](https://huggingface.co/datasets/xlangai/BRIGHT)
+
+To evaluate a trained model, you need to run:
+```
+python experiments/mteb_eval_custom.py \
+--base_model_name_or_path meta-llama/Meta-Llama-3-8B-Instruct \
+--peft_model_name_or_path McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp \
+--task_name News21InstructionRetrieval \
+--output_dir results/followir/News21InstructionRetrieval/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp \
+--batch_size 128
+```
+
+> Hints: do remeber to check the GPU ids set in experiments/experiments/mteb_eval_custom.py.
 
 
 
