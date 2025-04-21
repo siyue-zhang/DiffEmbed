@@ -49,8 +49,8 @@ class MSMARCO(Dataset):
         # total 980k rows
         assert self.split == 'train'
         dataset = load_dataset(file_path)[self.split]
-        # we only use first 200k rows
-        dataset = dataset.select(range(200_000))
+        # we only use first k rows
+        dataset = dataset.select(range(32_000))
         # shuffle rows
         # dataset = dataset.shuffle(seed=42) 
 
