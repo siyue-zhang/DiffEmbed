@@ -9,7 +9,7 @@
 Diffusion Embedder is a simple recipe to train text encoders from diffusion LMs without the need of any transformation step. Diffusion LMs naturally possess bidirectional attention, which is a perfect fit for text embeddings. We demonstrate that Diffusion LM embeddings achieve comparable or better performance than Autoregressive LMs across a range of retrieval tasks (reaching achieve state-of-the-art performance), including instruction-following, long-document, and reasoning-intensive retrieval.
 
 <p align="center">
-  <img src="" width="75%" alt="figure1"/>
+  <img src="https://github.com/siyue-zhang/diffusion_embedder/blob/master/assets/main.png" width="75%" alt="figure1"/>
 </p>
 
 This project is implemented based on the code from [LLM2Vec](https://github.com/McGill-NLP/llm2vec/) project, big thanks to the authors.
@@ -69,7 +69,7 @@ We conduct supervised contrastive training for Dream for instruction-following r
 
 Dataset statistics are shown below.
 <p align="center">
-  <img src="" width="75%" alt="table"/>
+  <img src="https://github.com/siyue-zhang/diffusion_embedder/blob/master/assets/statistics.png" width="75%" alt="table"/>
 </p>
 
 To train the Meta-Llama-3-8B model with supervised contrastive learning, run the following command:
