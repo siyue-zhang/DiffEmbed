@@ -40,7 +40,7 @@ pip install -e .  # install llm2vec
    
 - MS MARCO with instructions is automatically available from Huggingface [samaya-ai/msmarco-w-instructions](https://huggingface.co/datasets/samaya-ai/msmarco-w-instructions/viewer/default/train?row=1).
 - Public E5 is available at Github [echo-embeddings](https://github.com/jakespringer/echo-embeddings). You need to download it in the `cache` directory.
-- TheoremAug is automatically available from Huggingface [aa]().
+- TheoremAug is available at Huggingface [TheoremAug](https://huggingface.co/siyue). You should put it in the `cache` directory.
 
 The directory layout should be as follows:
 ```
@@ -56,7 +56,7 @@ cache
 
 ## TheoremAug
 
-This augmentation dataset for the reasoning-intensive retrieval task (e.g., searching math and physics solutions) is constructed using GPT4o-mini. We prompt the LLM to generate question-solution pairs related to a given list of theorems. Theorems include math, physics, finance, and code. The dataset is available at Huggingface [TheoremAug](https://huggingface.co/siyue).
+This augmentation dataset for the reasoning-intensive retrieval task (e.g., searching math and physics solutions) is constructed using GPT4o-mini. We prompt the LLM to generate problem-solution pairs related to a given list of theorems. Theorems include math, physics, finance, and code. The problem-solution pairs for the same theorem are positive document for each other. The problem-solution pairs for different theorems are negative document for each other.
 
 <p align="center">
   <img src="https://github.com/siyue-zhang/diffusion_embedder/blob/master/assets/gen.png" width="80%" alt="gen"/>
