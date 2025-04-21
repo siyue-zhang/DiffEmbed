@@ -56,7 +56,7 @@ cache
 
 ## TheoremAug
 
-This augmentation dataset is constructed by us using GPT4o-mini. We prompt the LLM to generate question-solution pairs related to a given list of theorems. Theorems include math, physics, finance, and code. The dataset is available at Huggingface [samaya-ai/msmarco-w-instructions](https://huggingface.co/datasets/samaya-ai/msmarco-w-instructions/viewer/default/train?row=1).
+This augmentation dataset for the reasoning-intensive retrieval task (e.g., searching math and physics solutions) is constructed using GPT4o-mini. We prompt the LLM to generate question-solution pairs related to a given list of theorems. Theorems include math, physics, finance, and code. The dataset is available at Huggingface [samaya-ai/msmarco-w-instructions](https://huggingface.co/datasets/samaya-ai/msmarco-w-instructions/viewer/default/train?row=1).
 
 <p align="center">
   <img src="https://github.com/siyue-zhang/diffusion_embedder/blob/master/assets/gen.png" width="80%" alt="gen"/>
