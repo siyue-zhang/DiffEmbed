@@ -95,3 +95,4 @@ urllib3==2.2.3
 wandb==0.19.9
 xxhash==3.5.0
 yarl==1.15.2
+tiktoken==0.9.0
