@@ -11,7 +11,7 @@ Diffusion Embedder is a simple recipe to train text encoders from diffusion LMs 
 We demonstrate that Diffusion LM embeddings achieve comparable or better performance than Autoregressive LMs across a range of retrieval tasks (reaching achieve state-of-the-art performance), including instruction-following, long-document, and reasoning-intensive retrieval.
 
 <p align="center">
-  <img src="https://github.com/siyue-zhang/diffusion_embedder/blob/master/assets/main.png" width="30%" alt="figure1"/>
+  <img src="https://github.com/siyue-zhang/diffusion_embedder/blob/master/assets/main.png" width="80%" alt="figure1"/>
 </p>
 
 This project is implemented based on the code from [LLM2Vec](https://github.com/McGill-NLP/llm2vec/) project, big thanks to the authors.
