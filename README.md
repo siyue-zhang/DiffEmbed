@@ -75,7 +75,7 @@ We conduct supervised contrastive training for Dream for instruction-following r
 
 Dataset statistics are shown below.
 <p align="center">
-  <img src="https://github.com/siyue-zhang/diffusion_embedder/blob/master/assets/statistics.png" width="100%" alt="table"/>
+  <img src="https://github.com/siyue-zhang/diffusion_embedder/blob/master/assets/statistics.png" width="85%" alt="table"/>
 </p>
 
 To train the Meta-Llama-3-8B model with supervised contrastive learning, run the following command:
