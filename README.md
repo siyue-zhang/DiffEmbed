@@ -40,12 +40,12 @@ pip install -e .  # install llm2vec
    
 - MS MARCO with instructions is automatically available from Huggingface [samaya-ai/msmarco-w-instructions](https://huggingface.co/datasets/samaya-ai/msmarco-w-instructions/viewer/default/train?row=1).
 - Public E5 is available at Github [echo-embeddings](https://github.com/jakespringer/echo-embeddings). You need to download it in the `cache` directory.
-- TheoremAug is available at Huggingface [TheoremAug](https://huggingface.co/siyue). You should put it in the `cache` directory.
+- TheoremAug is in the `TheoremAug` directory.
 
 The directory layout should be as follows:
 ```
 cache
-|── TheoremAug.jsonl
+|── 
 └── echo-data
     ├── allnli_split1.jsonl
     ├── allnli_split2.jsonl
@@ -71,7 +71,7 @@ LLM2Vec class is a wrapper on top of HuggingFace models to support enabling bidi
 We conduct supervised contrastive training for Dream for instruction-following retrieval, long-document retrieval, and reasoning-intensive retrieval. For each task, we will finetune the base language models (e.g., Dream) with one training dataset using LoRA.
 - instruction-following retrieval: [msmarco-w-instructions](https://huggingface.co/datasets/samaya-ai/msmarco-w-instructions/viewer/default/train?row=1)
 - long-document retrieval: [Public E5](https://huggingface.co/datasets/dwzhu/LongEmbed)
-- reasoning-intensive retrieval: [TheoremAug](https://huggingface.co/siyue)
+- reasoning-intensive retrieval: TheoremAug
 
 Dataset statistics are shown below.
 <p align="center">
