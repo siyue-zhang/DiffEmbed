@@ -5,7 +5,7 @@
 
 # torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Mistral_if.json
 # torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Dream_if.json
-# torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/MetaLlama3_if.json
+torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/MetaLlama3_if.json
 # torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Qwen2_if.json
 
 ## test for instruction following retrieval
@@ -46,7 +46,7 @@
 ## train for long document retrieval
 # set 4 GPUs
 
-torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Dream_long.json
+# torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Dream_long.json
 torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Mistral_long.json
 torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/MetaLlama3_long.json
 torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Qwen2_long.json
@@ -60,7 +60,7 @@ torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/d
 # MODELS["meta-llama/Meta-Llama-3-8B-Instruct"]="/home/siyue/Projects/diffusion_embedder/output/Meta-Llama-3-8B-Instruct-mntp-e5/E5_train_m-Meta-Llama-3-8B-Instruct_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-5e-05_lora_r-16/checkpoint-1000"
 # MODELS["mistralai/Mistral-7B-Instruct-v0.2"]="/home/siyue/Projects/diffusion_embedder/output/Mistral-7B-Instruct-mntp-e5/E5_train_m-Mistral-7B-Instruct-v0.2_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-5e-05_lora_r-16/checkpoint-1000"
 
-# TASKS=("LEMBQMSumRetrieval" "LEMBNarrativeQARetrieval" "LEMBWikimQARetrieval" "LEMBSummScreenFDRetrieval" "LEMBNeedleRetrieval" "LEMBPasskeyRetrieval")
+# TASKS=("LEMBNarrativeQARetrieval" "LEMBQMSumRetrieval" "LEMBWikimQARetrieval" "LEMBSummScreenFDRetrieval" "LEMBNeedleRetrieval" "LEMBPasskeyRetrieval")
 
 # for MODEL in "${!MODELS[@]}"; do
 #     PEFT="${MODELS[$MODEL]}"
@@ -89,19 +89,19 @@ torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/d
 ## train for reasoning-intensive retrieval
 # set 4 GPUs
 
-# torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Mistral_theorem.json
-# torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Dream_theorem.json
-# torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/MetaLlama3_theorem.json
-# torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Qwen2_theorem.json
+torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Dream_theorem.json
+torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Mistral_theorem.json
+torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/MetaLlama3_theorem.json
+torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Qwen2_theorem.json
 
 ## test for reasoning-intensive retrieval
 # set 4 GPUs
 
 # declare -A MODELS
-# MODELS["Qwen/Qwen2.5-7B-Instruct"]="/home/siyue/Projects/diffusion_embedder/output/Qwen2.5-7B-Instruct-mntp-e5/E5_train_m-Qwen2.5-7B-Instruct_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-5e-05_lora_r-16/checkpoint-1000"
-# MODELS["siyue/Dream_emb"]="/home/siyue/Projects/diffusion_embedder/output/Dream-e5/E5_train_m-Dream_emb_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-5e-05_lora_r-16/checkpoint-1000"
-# MODELS["meta-llama/Meta-Llama-3-8B-Instruct"]="/home/siyue/Projects/diffusion_embedder/output/Meta-Llama-3-8B-Instruct-mntp-e5/E5_train_m-Meta-Llama-3-8B-Instruct_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-5e-05_lora_r-16/checkpoint-1000"
-# MODELS["mistralai/Mistral-7B-Instruct-v0.2"]="/home/siyue/Projects/diffusion_embedder/output/Mistral-7B-Instruct-mntp-e5/E5_train_m-Mistral-7B-Instruct-v0.2_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-5e-05_lora_r-16/checkpoint-1000"
+# MODELS["Qwen/Qwen2.5-7B-Instruct"]=""
+# MODELS["siyue/Dream_emb"]=""
+# MODELS["meta-llama/Meta-Llama-3-8B-Instruct"]=""
+# MODELS["mistralai/Mistral-7B-Instruct-v0.2"]=""
 
 # TASKS=("BrightTheoremqaTheorems" "BrightTheoremqaQuestions" "BrightAops" "BrightLeetcode")
 
