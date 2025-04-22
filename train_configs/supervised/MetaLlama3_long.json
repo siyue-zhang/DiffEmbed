@@ -1,6 +1,6 @@
 {
     "model_name_or_path": "meta-llama/Meta-Llama-3-8B-Instruct",
-    "peft_model_name_or_path": "McGill-NLP/Meta-Llama-3-8B-Instruct-mntp",
+    "peft_model_name_or_path": "McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp", 
     "bidirectional": true,
     "pooling_mode": "mean",
     "dataset_name": "E5",
