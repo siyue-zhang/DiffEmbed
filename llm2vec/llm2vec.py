@@ -268,6 +268,9 @@ class LLM2Vec(nn.Module):
         sentence_feature["attention_mask"] = sentence_feature["embed_mask"]
 
     def forward(self, sentence_feature: Dict[str, Tensor]):
+        # fix for qwen 
+        sentence_feature["input_ids"] = sentence_feature["input_ids"].long()
+        #
         embed_mask = None
         if "embed_mask" in sentence_feature:
             embed_mask = sentence_feature.pop("embed_mask")
