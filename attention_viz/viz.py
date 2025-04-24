@@ -158,7 +158,7 @@ def main():
 
         print(compute_entropy(attention))
     
-    assert 1==2
+        assert 1==2
 
     #     scores = compute_total_attention_metrics(attention)
     #     # Print scores for this head

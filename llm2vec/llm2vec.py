@@ -288,15 +288,15 @@ class LLM2Vec(nn.Module):
         seq_lengths = features["attention_mask"].sum(dim=-1)
         
         ###
-        for i, length in enumerate(seq_lengths):
-            print("DEBUG last_hidden_states type:", type(last_hidden_states))
-            print(f"DEBUG last_hidden_states[{i}] type:", type(last_hidden_states[i]))
-            print("DEBUG length type:", type(length), "value:", length)
-            try:
-                print(seq_lengths)
-                print(last_hidden_states[i, -length:, :].mean(dim=0))
-            except Exception as e:
-                import ipdb; ipdb.set_trace()
+        # for i, length in enumerate(seq_lengths):
+        #     print("DEBUG last_hidden_states type:", type(last_hidden_states))
+        #     print(f"DEBUG last_hidden_states[{i}] type:", type(last_hidden_states[i]))
+        #     print("DEBUG length type:", type(length), "value:", length)
+        #     try:
+        #         print(seq_lengths)
+        #         print(last_hidden_states[i, -length:, :].mean(dim=0))
+        #     except Exception as e:
+        #         import ipdb; ipdb.set_trace()
         ###
 
         if self.pooling_mode == "mean":
