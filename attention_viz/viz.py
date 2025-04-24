@@ -113,8 +113,8 @@ def load_all_positive_documents():
 
 def main():
     # Model path
-    # model_path = "/home/siyue/Projects/diffusion_embedder/output/Dream-e5/E5_train_m-Dream_emb_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-5e-05_lora_r-16/checkpoint-1000"
-    model_path = "/home/siyue/Projects/diffusion_embedder/output/Mistral-7B-Instruct-mntp-e5/E5_train_m-Mistral-7B-Instruct-v0.2_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-1000"
+    model_path = "/home/siyue/Projects/diffusion_embedder/output/!Dream-e5/E5_train_m-Dream_emb_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-5e-05_lora_r-16/checkpoint-1000"
+    # model_path = "/home/siyue/Projects/diffusion_embedder/output/!Mistral-7B-Instruct-mntp-e5/E5_train_m-Mistral-7B-Instruct-v0.2_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-1000"
     print(model_path)
     # Load model and tokenizer
     model, tokenizer = load_model_and_tokenizer(model_path)
@@ -136,32 +136,44 @@ def main():
     num_heads = attention_maps[0].shape[1]
     
     # Initialize dictionaries to store cumulative scores
-    avg_scores = {
-        'lrap': 0.0,
-        'forward_srap': 0.0,
-        'backward_srap': 0.0
-    }
+    # avg_scores = {
+    #     'lrap': 0.0,
+    #     'forward_srap': 0.0,
+    #     'backward_srap': 0.0
+    # }
 
-    print("\nScores for each attention head:")
-    print("Head\tLRAP\tForward SRAP\tBackward SRAP")
-    print("-" * 50)
+    # print("\nScores for each attention head:")
+    # print("Head\tLRAP\tForward SRAP\tBackward SRAP")
+    # print("-" * 50)
 
     for head in range(num_heads):
-        attention = attention_maps[0][0][head]
-        scores = compute_total_attention_metrics(attention)
-        # Print scores for this head
-        print(f"{head}\t{scores['lrap']:.4f}\t{scores['forward_srap']:.4f}\t{scores['backward_srap']:.4f}")
-        # Accumulate scores
-        for metric in avg_scores:
-            avg_scores[metric] += scores[metric]
+        attention = attention_maps[last_layer][0][head]
+
+        def compute_entropy(attn_weights):  # shape: (num_heads, seq_len, seq_len)
+            # Small epsilon to avoid log(0)
+            eps = 1e-8
+            attn_weights = attn_weights + eps
+            entropy = -torch.sum(attn_weights * torch.log(attn_weights), dim=-1)  # shape: (num_heads, seq_len)
+            return entropy  # can average later
+
+        print(compute_entropy(attention))
     
-    # Calculate averages
-    for metric in avg_scores:
-        avg_scores[metric] /= num_heads
+    assert 1==2
+
+    #     scores = compute_total_attention_metrics(attention)
+    #     # Print scores for this head
+    #     print(f"{head}\t{scores['lrap']:.4f}\t{scores['forward_srap']:.4f}\t{scores['backward_srap']:.4f}")
+    #     # Accumulate scores
+    #     for metric in avg_scores:
+    #         avg_scores[metric] += scores[metric]
     
-    print("\nAverage attention metrics across all heads:")
-    for metric, value in avg_scores.items():
-        print(f"{metric}: {value:.4f}")
+    # # Calculate averages
+    # for metric in avg_scores:
+    #     avg_scores[metric] /= num_heads
+    
+    # print("\nAverage attention metrics across all heads:")
+    # for metric, value in avg_scores.items():
+    #     print(f"{metric}: {value:.4f}")
 
 
 if __name__ == "__main__":

@@ -238,6 +238,7 @@ class E5Mix(Dataset):
             e5 = tmp
             self.data += e5
 
+
         random.shuffle(self.data)
         self.data = [item for sublist in self.data for item in sublist]
 

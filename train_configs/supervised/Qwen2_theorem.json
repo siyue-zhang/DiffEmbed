@@ -10,7 +10,7 @@
     "add_e5": false,
     "dataset_file_path": "cache/echo-data",
     "remove_unused_columns": false,
-    "learning_rate": 5e-5,
+    "learning_rate": 1e-4,
     "num_train_epochs": 3,
     "warmup_steps": 100,
     "per_device_train_batch_size": 4,
