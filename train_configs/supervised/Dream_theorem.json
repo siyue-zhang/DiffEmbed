@@ -3,7 +3,7 @@
     "bidirectional": true,
     "pooling_mode": "mean",
     "dataset_name": "E5Mix",
-    "aug_file_path": "TheoremAug/TheoremAug_old.jsonl",
+    "aug_file_path": "TheoremAug/TheoremAug.jsonl",
     "domain": "all",
     "task":"all",
     "add_e5": false,
