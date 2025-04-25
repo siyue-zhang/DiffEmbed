@@ -63,7 +63,7 @@ for instance, pairs in pairs_by_instance.items():
     question_type = pairs[0]['question_type']
     reference = pairs[0]['reference']
 
-    related_instances = get_related_strings(similar_question_mapping, instance)
+    # related_instances = get_related_strings(similar_question_mapping, instance)
 
     definition = definition_by_instance[instance]
     problems = [pair['problem'] for pair in pairs]
@@ -88,8 +88,8 @@ for instance, pairs in pairs_by_instance.items():
         for k, idx in enumerate(ids):
             if definition_instances[idx] == instance:
                 continue
-            if definition_instances[idx] in related_instances:
-                continue
+            # if definition_instances[idx] in related_instances:
+            #     continue
             if definition_instances[idx] in p2i_negatives_instance_map[instance]:
                 continue
             if get_domain_by_instance[definition_instances[idx]] != get_domain_by_instance[instance]:
@@ -141,8 +141,8 @@ for instance, pairs in pairs_by_instance.items():
         for k, idx in enumerate(ids):
             if solution_instances[idx]==instance:
                 continue
-            if solution_instances[idx] in related_instances:
-                continue
+            # if solution_instances[idx] in related_instances:
+            #     continue
             if get_domain_by_instance[solution_instances[idx]] != get_domain_by_instance[instance]:
                 continue
             if solution_instances[idx] in negatives_instance:
@@ -193,8 +193,8 @@ for instance, pairs in pairs_by_instance.items():
         for k, idx in enumerate(ids):
             if problem_instances[idx] == instance:
                 continue
-            if problem_instances[idx] in related_instances:
-                continue
+            # if problem_instances[idx] in related_instances:
+            #     continue
             if problem_instances[idx] in negatives_instance_by_problem[problem]:
                 continue
             if get_domain_by_instance[problem_instances[idx]] != get_domain_by_instance[instance]:
@@ -294,6 +294,6 @@ print(Counter([d['task_type'] for d in finals]))
 print(len(finals))
 print('\n')
 
-file_path = 'TheoremAug.jsonl'
+file_path = 'TheoremAug_test.jsonl'
 write_jsonl(file_path, finals)
 
