@@ -15,7 +15,6 @@ ext3/**
 results/**
 qwen_results/**
 wandb/**
-dream/**
 fast_results/**
 
 
