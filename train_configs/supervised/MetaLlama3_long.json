@@ -1,11 +1,12 @@
 {
     "model_name_or_path": "meta-llama/Meta-Llama-3-8B-Instruct",
+    "peft_model_name_or_path": "McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp",
     "bidirectional": true,
     "pooling_mode": "mean",
     "dataset_name": "E5",
     "dataset_file_path": "cache/echo-data",
     "remove_unused_columns": false,
-    "learning_rate": 1e-4,
+    "learning_rate": 5e-5,
     "num_train_epochs": 1,
     "warmup_steps": 200,
     "per_device_train_batch_size": 4,
@@ -17,7 +18,7 @@
     "doc_max_length": 4096,
     "skip_instruction": false,
     "overwrite_output_dir": true,
-    "output_dir": "output/Meta-Llama-3-8B-Instruct-e5",
+    "output_dir": "output/Meta-Llama-3-8B-Instruct-mntp-e5",
     "logging_steps": 20,
     "save_steps": 500,
     "save_only_model": true,
@@ -28,6 +29,6 @@
     "attn_implementation": "flash_attention_2",
     "seed": 42,
     "report_to": ["wandb"],
-    "run_name": "Meta-Llama-3-8B-Instruct-e5",
+    "run_name": "Meta-Llama-3-8B-Instruct-mntp-e5",
     "loss_class": "HardNegativeNLLLoss"
 }
