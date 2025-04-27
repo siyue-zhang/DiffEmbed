@@ -4,6 +4,7 @@
     "bidirectional": true,
     "pooling_mode": "mean",
     "dataset_name": "MSMARCO",
+    "scale_by_dim": true,
     "dataset_file_path": "samaya-ai/msmarco-w-instructions",
     "remove_unused_columns": false,
     "learning_rate": 1e-4,

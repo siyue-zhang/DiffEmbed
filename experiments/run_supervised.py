@@ -263,35 +263,6 @@ class CustomArguments:
         default=False, metadata={"help": "The loss margin for the loss function"}
     )
 
-# @dataclass
-# class DefaultCollator:
-#     model: LLM2Vec
-
-#     def __init__(self, model: LLM2Vec) -> None:
-#         self.model = model
-
-#     def __call__(self, features: List[Dict[str, Any]]) -> Dict[str, torch.Tensor]:
-#         batch = features
-#         num_texts = len(batch[0].texts)
-#         texts = [[] for _ in range(num_texts)]
-#         labels = []
-
-#         for example in batch:
-#             for idx, text in enumerate(example.texts):
-#                 text = prepare_for_tokenization(
-#                     self.model, text, pooling_mode=self.model.pooling_mode
-#                 )
-#                 texts[idx].append(text)
-#             labels.append(example.label)
-#         labels = torch.tensor(labels)
-
-#         sentence_features = []
-#         for idx in range(num_texts):
-#             tokenized = self.model.tokenize(texts[idx])
-#             sentence_features.append(tokenized)
-
-#         return sentence_features, labels
-
 
 class DefaultCollator:
     model: LLM2Vec
@@ -318,33 +289,7 @@ class DefaultCollator:
         Returns:
             Dict[str, torch.Tensor]: The collated batch, formatted according to the selected loss approach.
         """
-        # if self.use_repllama_loss:
-        #     # RepllamaLoss Approach: Explicit positives and negatives
-        #     queries = []
-        #     positives = []
-        #     negatives = []
-        #     for example in features:
-        #         # `example.texts` has the format: [query, positive, negative1, negative2, ...]
-        #         query = prepare_for_tokenization(self.model, example.texts[0], pooling_mode=self.model.pooling_mode)
-        #         positive = prepare_for_tokenization(self.model, example.texts[1], pooling_mode=self.model.pooling_mode)
-        #         negs = [
-        #             prepare_for_tokenization(self.model, text, pooling_mode=self.model.pooling_mode)
-        #             for text in example.texts[2:]
-        #         ]
 
-        #         # Get embeddings directly
-        #         query_tokenized = self.model.tokenize([query])
-        #         positive_tokenized = self.model.tokenize([positive])
-        #         neg_tokenized = self.model.tokenize(negs)
-                
-        #         queries.append(query_tokenized)
-        #         positives.append(positive_tokenized)
-        #         negatives.append(neg_tokenized)
-
-        #     return (queries, positives, negatives)
-
-        # else:
-        # Original Approach: In-batch negatives
         batch = features
         num_texts = len(batch[0].texts)
         texts = [[] for _ in range(num_texts)]

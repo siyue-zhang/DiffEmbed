@@ -10,7 +10,6 @@ output/**
 cluster_scripts/**
 backup/**
 wandb/**
-TheoremAug/output/**
 ext3/**
 results/**
 qwen_results/**
