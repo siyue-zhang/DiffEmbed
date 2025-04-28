@@ -22,8 +22,8 @@ To use Diffusion Embedder, you can clone this repository and follow these steps:
 1. create conda environment and install pip packages:
 ```bash
 conda create -n diffusion_embedder python=3.10.16
-conda install pytorch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 pytorch-cuda=12.1 -c pytorch -c nvidia
 conda activate diffusion_embedder
+conda install pytorch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 pytorch-cuda=12.1 -c pytorch -c nvidia
 pip install -r requirements.txt
 ```
 
