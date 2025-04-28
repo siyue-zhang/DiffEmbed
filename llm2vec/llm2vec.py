@@ -3,6 +3,7 @@ import logging
 import os
 from functools import partial
 from typing import Dict, List, Optional, Union
+from copy import deepcopy
 
 import numpy as np
 import torch
@@ -80,6 +81,7 @@ class LLM2Vec(nn.Module):
                 f"{config_class_name} is not supported yet with bidirectional models."
             )
 
+
     @classmethod
     def from_pretrained(
         cls,
@@ -97,6 +99,19 @@ class LLM2Vec(nn.Module):
         encoder_args = {
             key: kwargs.pop(key, None) for key in keys if kwargs.get(key) is not None
         }
+
+        ###
+        base_model_paths = {
+            "siyue/LLM2Vec-Qwen2.5-7B-Instruct-mntp": "Qwen/Qwen2.5-7B-Instruct",
+            "McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp-unsup-simcse": "McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp",
+            "McGill-NLP/LLM2Vec-Mistral-7B-Instruct-v2-mntp-unsup-simcse": "McGill-NLP/LLM2Vec-Mistral-7B-Instruct-v2-mntp",
+        }
+        base_is_peft = base_model_name_or_path in base_model_paths
+
+        if base_is_peft:
+            base_peft_path = deepcopy(base_model_name_or_path)
+            base_model_name_or_path = base_model_paths[base_model_name_or_path]
+
         ##
         trust_remote_code = True
         tokenizer = AutoTokenizer.from_pretrained(
@@ -123,8 +138,13 @@ class LLM2Vec(nn.Module):
             config = PretrainedConfig.from_dict(config_dict)
             model.config._name_or_path = config._name_or_path
 
-        # For special case where config.json and adapter weights are in the same directory
-        if hasattr(model, "peft_config"):
+        if base_is_peft:
+            model = PeftModel.from_pretrained(
+                model,
+                base_peft_path,
+            )
+            model = model.merge_and_unload()
+        elif hasattr(model, "peft_config"):
             model = PeftModel.from_pretrained(
                 model,
                 base_model_name_or_path,

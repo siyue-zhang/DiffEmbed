@@ -106,21 +106,7 @@ if __name__ == "__main__":
         with open(args.task_to_instructions_fp, "r") as f:
             task_to_instructions = json.load(f)
     
-    # if parser.task_name=="BrightRetrieval":
-    #     subset_instructions = {
-    #         'leetcode': "Given a coding problem, retrieve a solution that applies the relevant algorithm, even if the solution was originally for a different problem:",
-    #         'theoremqa_theorems': "Given a problem, retrieve the relevant math theorem that is helpful for solving the given problem:",
-    #         'aops': "Given a problem, retrieve a solution that applies the relevant math theorem, even if the solution was originally for a different problem:",
-    #         'economics': "Given a Economics post, retrieve relevant passages that help answer the post:",
-    #     }
-    #     task_to_instructions["BrightRetrieval"] = subset_instructions[parser.subset_name]
-    #     if parser.subset_name in ["leetcode","aops","theoremqa_theorems","theoremqa_questions"]:
-    #         DOMAINS_LONG = []
-    #         DOMAINS = [parser.subset_name]
-    #     else:
-    #         DOMAINS_LONG = [parser.subset_name]
-    #         DOMAINS = [parser.subset_name]
-
+    
     l2v_model = LLM2Vec.from_pretrained(
         args.base_model_name_or_path,
         peft_model_name_or_path=args.peft_model_name_or_path,
