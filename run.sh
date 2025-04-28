@@ -54,7 +54,7 @@
 ## test for long document retrieval
 ## set 1 GPU
 
-# declare -A MODELS
+declare -A MODELS
 # MODELS["Qwen/Qwen2.5-7B-Instruct"]="/home/siyue/Projects/diffusion_embedder/output/Qwen2.5-7B-Instruct-mntp-e5/E5_train_m-Qwen2.5-7B-Instruct_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-1000"
 # MODELS["siyue/Dream_emb"]="/home/siyue/Projects/diffusion_embedder/output/Dream-e5/E5_train_m-Dream_emb_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-5e-05_lora_r-16/checkpoint-1000"
 # MODELS["meta-llama/Meta-Llama-3-8B-Instruct"]="/home/siyue/Projects/diffusion_embedder/output/Meta-Llama-3-8B-Instruct-mntp-e5/E5_train_m-Meta-Llama-3-8B-Instruct_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-500"
@@ -66,7 +66,7 @@
 
 # TASKS=("LEMBNarrativeQARetrieval" "LEMBQMSumRetrieval" "LEMBWikimQARetrieval" "LEMBSummScreenFDRetrieval" "LEMBNeedleRetrieval" "LEMBPasskeyRetrieval")
 # TASKS=("LEMBNarrativeQARetrieval")
-# TASKS=("LEMBQMSumRetrieval" "LEMBWikimQARetrieval" "LEMBSummScreenFDRetrieval" "LEMBNeedleRetrieval" "LEMBPasskeyRetrieval")
+# TASKS=("LEMBQMSumRetrieval" "LEMBWikimQARetrieval" "LEMBSummScreenFDRetrieval")
 
 # for MODEL in "${!MODELS[@]}"; do
 #     PEFT="${MODELS[$MODEL]}"
@@ -109,7 +109,7 @@ declare -A MODELS
 # MODELS["McGill-NLP/LLM2Vec-Mistral-7B-Instruct-v2-mntp"]="/home/siyue/Projects/diffusion_embedder/output/!Mistral-7B-Instruct-mntp-TheoremAug/E5Mix_train_m-Mistral-7B-Instruct-v0.2_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-680"
 
 MODELS["McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp-unsup-simcse"]="/home/siyue/Projects/diffusion_embedder/output/Meta-Llama-3-8B-Instruct-mntp-simcse-TheoremAug/E5Mix_train_m-Meta-Llama-3-8B-Instruct_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-680"
-# MODELS["McGill-NLP/LLM2Vec-Mistral-7B-Instruct-v2-mntp-simcse"]="/home/siyue/Projects/diffusion_embedder/output/Mistral-7B-Instruct-mntp-simcse-TheoremAug/E5Mix_train_m-Mistral-7B-Instruct-v0.2_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-680"
+MODELS["McGill-NLP/LLM2Vec-Mistral-7B-Instruct-v2-mntp-unsup-simcse"]="/home/siyue/Projects/diffusion_embedder/output/Mistral-7B-Instruct-mntp-simcse-TheoremAug/E5Mix_train_m-Mistral-7B-Instruct-v0.2_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-680"
 
 TASKS=("BrightTheoremqaTheorems")
 # TASKS=("BrightTheoremqaTheorems" "BrightTheoremqaQuestions" "BrightAops" "BrightLeetcode")
