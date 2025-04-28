@@ -72,7 +72,7 @@ LLM2Vec class is a wrapper on top of HuggingFace models to support enabling bidi
 We conduct supervised contrastive training for Dream for instruction-following retrieval, long-document retrieval, and reasoning-intensive retrieval. For each task, we will finetune the base language models (e.g., Dream) with one training dataset using LoRA.
 - instruction-following retrieval: [msmarco-w-instructions](https://huggingface.co/datasets/samaya-ai/msmarco-w-instructions/viewer/default/train?row=1)
 - long-document retrieval: [Public E5](https://huggingface.co/datasets/dwzhu/LongEmbed)
-- reasoning-intensive retrieval: TheoremAug
+- reasoning-intensive retrieval: [TheoremAug](https://github.com/siyue-zhang/diffusion_embedder/tree/master/TheoremAug)
 
 Dataset statistics are shown below.
 <p align="center">
