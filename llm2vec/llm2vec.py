@@ -118,6 +118,7 @@ class LLM2Vec(nn.Module):
             base_model_name_or_path, 
             trust_remote_code=trust_remote_code
         )
+        print(f'loaded {base_model_name_or_path} base model.')
         ##
         tokenizer.pad_token = tokenizer.eos_token
         tokenizer.padding_side = "left"
@@ -138,18 +139,23 @@ class LLM2Vec(nn.Module):
             config = PretrainedConfig.from_dict(config_dict)
             model.config._name_or_path = config._name_or_path
 
+        # For special case where config.json and adapter weights are in the same directory
+        if hasattr(model, "peft_config"):
+            model = PeftModel.from_pretrained(
+                model,
+                base_model_name_or_path,
+            )
+            model = model.merge_and_unload()
+            print(f'loaded {base_model_name_or_path} peft model.')
+
         if base_is_peft:
             model = PeftModel.from_pretrained(
                 model,
                 base_peft_path,
             )
             model = model.merge_and_unload()
-        elif hasattr(model, "peft_config"):
-            model = PeftModel.from_pretrained(
-                model,
-                base_model_name_or_path,
-            )
-            model = model.merge_and_unload()
+            print(f'loaded {base_peft_path} peft model.')
+
 
         if peft_model_name_or_path is not None:
             model = PeftModel.from_pretrained(

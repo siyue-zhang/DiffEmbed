@@ -113,7 +113,7 @@ MODELS["McGill-NLP/LLM2Vec-Mistral-7B-Instruct-v2-mntp-unsup-simcse"]="/home/siy
 
 # TASKS=("BrightTheoremqaTheorems")
 # TASKS=("BrightTheoremqaTheorems" "BrightTheoremqaQuestions" "BrightAops" "BrightLeetcode")
-TASKS=("BrightTheoremqaQuestions" "BrightAops" "BrightLeetcode")
+TASKS=("BrightTheoremqaTheorems" "BrightTheoremqaQuestions")
 # TASKS=("BrightAops" "BrightLeetcode")
 
 for MODEL in "${!MODELS[@]}"; do
