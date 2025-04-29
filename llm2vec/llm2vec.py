@@ -81,7 +81,6 @@ class LLM2Vec(nn.Module):
                 f"{config_class_name} is not supported yet with bidirectional models."
             )
 
-
     @classmethod
     def from_pretrained(
         cls,
@@ -91,39 +90,23 @@ class LLM2Vec(nn.Module):
         enable_bidirectional=True,
         **kwargs,
     ):
-        # Remove weights_only if present since it's not supported in transformers 4.44.2
-        kwargs.pop('weights_only', None)
-
         # pop out encoder args
         keys = ["pooling_mode", "max_length", "doc_max_length", "skip_instruction"]
         encoder_args = {
             key: kwargs.pop(key, None) for key in keys if kwargs.get(key) is not None
         }
 
-        ###
-        base_model_paths = {
-            "siyue/LLM2Vec-Qwen2.5-7B-Instruct-mntp": "Qwen/Qwen2.5-7B-Instruct",
-            "McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp-unsup-simcse": "McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp",
-            "McGill-NLP/LLM2Vec-Mistral-7B-Instruct-v2-mntp-unsup-simcse": "McGill-NLP/LLM2Vec-Mistral-7B-Instruct-v2-mntp",
-        }
-        base_is_peft = base_model_name_or_path in base_model_paths
+        base_is_peft = False
+        if base_model_name_or_path=="siyue/LLM2Vec-Qwen2.5-7B-Instruct-mntp":
+            base_is_peft = True
+            base_peft = "siyue/LLM2Vec-Qwen2.5-7B-Instruct-mntp"
+            base_model_name_or_path = "Qwen/Qwen2.5-7B-Instruct"
 
-        if base_is_peft:
-            base_peft_path = deepcopy(base_model_name_or_path)
-            base_model_name_or_path = base_model_paths[base_model_name_or_path]
-
-        ##
-        trust_remote_code = True
-        tokenizer = AutoTokenizer.from_pretrained(
-            base_model_name_or_path, 
-            trust_remote_code=trust_remote_code
-        )
-        print(f'loaded {base_model_name_or_path} base model.')
-        ##
+        tokenizer = AutoTokenizer.from_pretrained(base_model_name_or_path)
         tokenizer.pad_token = tokenizer.eos_token
         tokenizer.padding_side = "left"
 
-        config = AutoConfig.from_pretrained(base_model_name_or_path, trust_remote_code=trust_remote_code)
+        config = AutoConfig.from_pretrained(base_model_name_or_path)
         config_class_name = config.__class__.__name__
 
         model_class = cls._get_model_class(
@@ -139,6 +122,13 @@ class LLM2Vec(nn.Module):
             config = PretrainedConfig.from_dict(config_dict)
             model.config._name_or_path = config._name_or_path
 
+        if base_is_peft:
+            model = PeftModel.from_pretrained(
+                model,
+                base_peft,
+            )
+            model = model.merge_and_unload()
+
         # For special case where config.json and adapter weights are in the same directory
         if hasattr(model, "peft_config"):
             model = PeftModel.from_pretrained(
@@ -146,24 +136,25 @@ class LLM2Vec(nn.Module):
                 base_model_name_or_path,
             )
             model = model.merge_and_unload()
-            print(f'loaded {base_model_name_or_path} peft model.')
-
-        if base_is_peft:
-            model = PeftModel.from_pretrained(
-                model,
-                base_peft_path,
-            )
-            model = model.merge_and_unload()
-            print(f'loaded {base_peft_path} peft model.')
-
+            print(f'merged {base_model_name_or_path} peft.')
 
         if peft_model_name_or_path is not None:
-            model = PeftModel.from_pretrained(
-                model,
-                peft_model_name_or_path,
-            )
+            print(f'initialize {peft_model_name_or_path} peft.')
             if merge_peft:
+                model = PeftModel.from_pretrained(
+                    model,
+                    peft_model_name_or_path,
+                )
                 model = model.merge_and_unload()
+                print('merged new peft.')
+            else:
+                model = PeftModel.from_pretrained(
+                    model,
+                    peft_model_name_or_path,
+                    is_trainable=True
+                )
+                trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+                print(f'Number of trainable parameters: {trainable_params}')
 
         config = {}
         config_addr = (
@@ -180,6 +171,7 @@ class LLM2Vec(nn.Module):
             config[key] = value
 
         return cls(model=model, tokenizer=tokenizer, **config)
+    
 
     def prepare_for_tokenization(self, text):
         if self.model.config._name_or_path == "meta-llama/Meta-Llama-3-8B-Instruct":

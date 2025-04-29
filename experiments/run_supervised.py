@@ -515,11 +515,14 @@ def main():
         if model_args.torch_dtype in ["auto", None]
         else getattr(torch, model_args.torch_dtype)
     )
+
+    is_simcse = 'simcse' in model_args.peft_model_name_or_path.lower()
+    
     model = LLM2Vec.from_pretrained(
         base_model_name_or_path=model_args.model_name_or_path,
         enable_bidirectional=model_args.bidirectional,
         peft_model_name_or_path=model_args.peft_model_name_or_path,
-        merge_peft=True,
+        merge_peft=False if is_simcse else True,
         pooling_mode=model_args.pooling_mode,
         max_length=model_args.max_seq_length,
         torch_dtype=torch_dtype,
@@ -528,13 +531,15 @@ def main():
         doc_max_length=model_args.doc_max_length,
     )
 
-    # model organization is LLM2VecModel.model -> HF Model, we have to apply PEFT to the inner model
-    model.model = initialize_peft(
-        model.model,
-        lora_r=custom_args.lora_r,
-        lora_alpha=2 * custom_args.lora_r,
-        lora_dropout=custom_args.lora_dropout,
-    )
+    if not is_simcse:
+        print('initialize a new peft')
+        # model organization is LLM2VecModel.model -> HF Model, we have to apply PEFT to the inner model
+        model.model = initialize_peft(
+            model.model,
+            lora_r=custom_args.lora_r,
+            lora_alpha=2 * custom_args.lora_r,
+            lora_dropout=custom_args.lora_dropout,
+        )
 
     tokenizer = model.tokenizer
 
