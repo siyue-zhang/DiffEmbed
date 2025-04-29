@@ -122,13 +122,6 @@ class LLM2Vec(nn.Module):
             config = PretrainedConfig.from_dict(config_dict)
             model.config._name_or_path = config._name_or_path
 
-        if base_is_peft:
-            model = PeftModel.from_pretrained(
-                model,
-                base_peft,
-            )
-            model = model.merge_and_unload()
-
         # For special case where config.json and adapter weights are in the same directory
         if hasattr(model, "peft_config"):
             model = PeftModel.from_pretrained(
@@ -137,6 +130,14 @@ class LLM2Vec(nn.Module):
             )
             model = model.merge_and_unload()
             print(f'merged {base_model_name_or_path} peft.')
+
+        if base_is_peft:
+            model = PeftModel.from_pretrained(
+                model,
+                base_peft,
+            )
+            model = model.merge_and_unload()
+            print(f'merged {base_peft} peft.')
 
         if peft_model_name_or_path is not None:
             print(f'initialize {peft_model_name_or_path} peft.')

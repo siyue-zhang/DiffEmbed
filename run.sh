@@ -12,10 +12,16 @@
 ## set 1 GPU
 
 # declare -A MODELS
-# MODELS["Qwen/Qwen2.5-7B-Instruct"]=""
+## Base direct
 # MODELS["siyue/Dream_emb"]="/home/siyue/Projects/diffusion_embedder/output/Dream-msmarco-w-instructions/MSMARCO_train_m-Dream_emb_p-mean_b-128_l-304_bidirectional-True_e-1_s-42_w-20_lr-5e-05_lora_r-32/checkpoint-250"
-# MODELS["meta-llama/Meta-Llama-3-8B-Instruct"]="/home/siyue/Projects/diffusion_embedder/output/Meta-Llama-3-8B-Instruct-mntp-msmarco-w-instructions/MSMARCO_train_m-Meta-Llama-3-8B-Instruct_p-mean_b-128_l-304_bidirectional-True_e-1_s-42_w-20_lr-5e-05_lora_r-32/checkpoint-250"
-# MODELS["mistralai/Mistral-7B-Instruct-v0.2"]="/home/siyue/Projects/diffusion_embedder/output/Mistral-7B-Instruct-mntp-msmarco-w-instructions/MSMARCO_train_m-Mistral-7B-Instruct-v0.2_p-mean_b-128_l-304_bidirectional-True_e-1_s-42_w-20_lr-5e-05_lora_r-32/checkpoint-250"
+# MODELS["Qwen/Qwen2.5-7B-Instruct"]=""
+# MODELS["meta-llama/Meta-Llama-3-8B-Instruct"]=""
+# MODELS["mistralai/Mistral-7B-Instruct-v0.2"]=""
+
+## MNTP
+# MODELS["McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp"]=""
+# MODELS["McGill-NLP/LLM2Vec-Mistral-7B-Instruct-v2-mntp"]=""
+# MODELS["siyue/LLM2Vec-Qwen2.5-7B-Instruct-mntp"]=""
 
 # TASKS=("News21InstructionRetrieval" "Core17InstructionRetrieval" "Robust04InstructionRetrieval" )
 
@@ -55,11 +61,13 @@
 ## set 1 GPU
 
 # declare -A MODELS
-# MODELS["Qwen/Qwen2.5-7B-Instruct"]="/home/siyue/Projects/diffusion_embedder/output/Qwen2.5-7B-Instruct-mntp-e5/E5_train_m-Qwen2.5-7B-Instruct_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-1000"
+## Base direct
 # MODELS["siyue/Dream_emb"]="/home/siyue/Projects/diffusion_embedder/output/Dream-e5/E5_train_m-Dream_emb_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-5e-05_lora_r-16/checkpoint-1000"
-# MODELS["meta-llama/Meta-Llama-3-8B-Instruct"]="/home/siyue/Projects/diffusion_embedder/output/Meta-Llama-3-8B-Instruct-mntp-e5/E5_train_m-Meta-Llama-3-8B-Instruct_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-500"
-# MODELS["mistralai/Mistral-7B-Instruct-v0.2"]="/home/siyue/Projects/diffusion_embedder/output/Mistral-7B-Instruct-mntp-e5/E5_train_m-Mistral-7B-Instruct-v0.2_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-1000"
+# MODELS["Qwen/Qwen2.5-7B-Instruct"]=""
+# MODELS["meta-llama/Meta-Llama-3-8B-Instruct"]=""
+# MODELS["mistralai/Mistral-7B-Instruct-v0.2"]=""
 
+## MNTP
 # MODELS["McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp"]="/home/siyue/Projects/diffusion_embedder/output/Meta-Llama-3-8B-Instruct-mntp-e5/E5_train_m-Meta-Llama-3-8B-Instruct_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-1000"
 # MODELS["McGill-NLP/LLM2Vec-Mistral-7B-Instruct-v2-mntp"]="/home/siyue/Projects/diffusion_embedder/output/!Mistral-7B-Instruct-mntp-e5/E5_train_m-Mistral-7B-Instruct-v0.2_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-1000"
 # MODELS["siyue/LLM2Vec-Qwen2.5-7B-Instruct-mntp"]="/home/siyue/Projects/diffusion_embedder/output/!Qwen2.5-7B-Instruct-mntp-e5/E5_train_m-Qwen2.5-7B-Instruct_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-1000"
@@ -140,6 +148,3 @@ torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/d
 #     done
 # done
 
-
-# torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Mistral_theorem.json
-# torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/MetaLlama3_theorem.json
