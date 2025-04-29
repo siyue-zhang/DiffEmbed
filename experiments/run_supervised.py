@@ -516,7 +516,7 @@ def main():
         else getattr(torch, model_args.torch_dtype)
     )
 
-    is_simcse = 'simcse' in model_args.peft_model_name_or_path.lower()
+    is_simcse = 'simcse' in model_args.peft_model_name_or_path.lower() if model_args.peft_model_name_or_path else False
     
     model = LLM2Vec.from_pretrained(
         base_model_name_or_path=model_args.model_name_or_path,
