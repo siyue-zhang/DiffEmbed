@@ -112,6 +112,7 @@ if __name__ == "__main__":
         peft_model_name_or_path=args.peft_model_name_or_path,
         device_map="cuda" if torch.cuda.is_available() else "cpu",
         torch_dtype=torch.bfloat16,
+        merge_peft=True
     )
 
     model = LLM2VecWrapper(model=l2v_model, task_to_instructions=task_to_instructions)
