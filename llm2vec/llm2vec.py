@@ -102,11 +102,11 @@ class LLM2Vec(nn.Module):
             base_peft = "siyue/LLM2Vec-Qwen2.5-7B-Instruct-mntp"
             base_model_name_or_path = "Qwen/Qwen2.5-7B-Instruct"
 
-        tokenizer = AutoTokenizer.from_pretrained(base_model_name_or_path)
+        tokenizer = AutoTokenizer.from_pretrained(base_model_name_or_path, trust_remote_code=True)
         tokenizer.pad_token = tokenizer.eos_token
         tokenizer.padding_side = "left"
 
-        config = AutoConfig.from_pretrained(base_model_name_or_path)
+        config = AutoConfig.from_pretrained(base_model_name_or_path, trust_remote_code=True)
         config_class_name = config.__class__.__name__
 
         model_class = cls._get_model_class(

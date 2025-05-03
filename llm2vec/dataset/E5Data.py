@@ -128,7 +128,8 @@ class E5Data(Dataset):
         data_map = new_data_map
 
         # reduce and equalize size for each one
-        top = 4000
+        # top = 4000
+        top = 8000
         for dataset in data_map:
             if len(data_map[dataset])>top:
                 data_map[dataset] = data_map[dataset][:top]
