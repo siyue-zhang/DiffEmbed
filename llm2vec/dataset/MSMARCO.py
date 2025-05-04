@@ -65,21 +65,32 @@ class MSMARCO(Dataset):
 
             # Get the first positive passage
             for pos in example['positive_passages']:
-                pos = pos['title'] + self.separator + pos['text'] if 'title' in pos else pos['text']
+                pos = pos['title'] + ' | ' + pos['text'] if 'title' in pos else pos['text']
+                pos = self.separator + pos
                 break
-                
-            # Get negative passages
+
+            new_negative_passages = []
+            for neg in example['new_negatives']:
+                text = neg['title'] + ' | ' + neg['text'] if 'title' in neg else neg['text']
+                new_negative_passages.append(self.separator + text)
+
             negative_passages = []
             for neg in example['negative_passages']:
-                text = neg['title'] + self.separator + neg['text'] if 'title' in neg else neg['text']
+                text = neg['title'] + ' | ' + neg['text'] if 'title' in neg else neg['text']
                 negative_passages.append(self.separator + text)
-                
+            
+            if len(new_negative_passages)>self.neg_num:
+                new_negative_passages = random.choices(new_negative_passages, k=self.neg_num)
+            add_neg_num = self.neg_num - len(new_negative_passages)
+
             # If we don't have enough negatives, randomly sample with replacement
-            if len(negative_passages) < self.neg_num:
-                negs = random.choices(negative_passages, k=self.neg_num)
+            if len(negative_passages) < add_neg_num:
+                negs = random.choices(negative_passages, k=add_neg_num)
             else:
                 # Randomly sample without replacement
-                negs = random.sample(negative_passages, k=self.neg_num)
+                negs = random.sample(negative_passages, k=add_neg_num)
+            
+            negs = new_negative_passages + negs
             
             all_samples.append(
                 DataSample(

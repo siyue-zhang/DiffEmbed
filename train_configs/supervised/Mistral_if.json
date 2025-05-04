@@ -19,7 +19,7 @@
     "doc_max_length": 196,
     "skip_instruction": false,
     "overwrite_output_dir": true,
-    "output_dir": "output/Mistral-7B-Instruct-mntp-msmarco-w-instructions",
+    "output_dir": "output/Mistral-7B-Instruct-mntp-msmarco",
     "logging_steps": 10,
     "save_steps": 100,
     "save_only_model": true,
@@ -30,6 +30,6 @@
     "attn_implementation": "flash_attention_2",
     "seed": 42,
     "report_to": ["wandb"],
-    "run_name": "Mistral-7B-Instruct-mntp-msmarco-w-instructions",
+    "run_name": "Mistral-7B-Instruct-mntp-msmarco",
     "loss_class": "RepllamaLoss"
 }

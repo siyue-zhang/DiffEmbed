@@ -8,7 +8,7 @@
     "remove_unused_columns": false,
     "learning_rate": 1e-4,
     "num_train_epochs": 1,
-    "warmup_steps": 50,
+    "warmup_steps": 100,
     "per_device_train_batch_size": 8,
     "per_device_eval_batch_size": 8,
     "gradient_accumulation_steps": 4,
@@ -18,7 +18,7 @@
     "doc_max_length": 196,
     "skip_instruction": false,
     "overwrite_output_dir": true,
-    "output_dir": "output/Dream-msmarco-w-instructions-noinb",
+    "output_dir": "output/Dream-msmarco",
     "logging_steps": 10,
     "save_steps": 100,
     "save_only_model": true,
@@ -29,6 +29,6 @@
     "attn_implementation": "sdpa",
     "seed": 42,
     "report_to": ["wandb"],
-    "run_name": "Dream-msmarco-w-instructions-noinb",
+    "run_name": "Dream-msmarco",
     "loss_class": "RepllamaLoss"
 }
