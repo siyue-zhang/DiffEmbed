@@ -13,17 +13,20 @@
 
 declare -A MODELS
 ## Base direct
-MODELS["siyue/Dream_emb"]="/home/siyue/Projects/diffusion_embedder/output/Dream-msmarco/MSMARCO_train_m-Dream_emb_p-mean_b-32_l-304_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-32/checkpoint-1000"
+MODELS["siyue/Dream_emb"]="/home/siyue/Projects/diffusion_embedder/output/Dream-msmarco-16k/MSMARCO_train_m-Dream_emb_p-mean_b-128_l-304_bidirectional-True_e-1_s-42_w-20_lr-0.0001_lora_r-32/checkpoint-125"
 # MODELS["Qwen/Qwen2.5-7B-Instruct"]=""
 # MODELS["meta-llama/Meta-Llama-3-8B-Instruct"]=""
 # MODELS["mistralai/Mistral-7B-Instruct-v0.2"]=""
 
 ## MNTP
-# MODELS["McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp"]=""
+# MODELS["McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp"]="/home/siyue/Projects/diffusion_embedder/output/Meta-Llama-3-8B-Instruct-mntp-msmarco/MSMARCO_train_m-Meta-Llama-3-8B-Instruct_p-mean_b-32_l-304_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-32/checkpoint-900"
 # MODELS["McGill-NLP/LLM2Vec-Mistral-7B-Instruct-v2-mntp"]=""
 # MODELS["siyue/LLM2Vec-Qwen2.5-7B-Instruct-mntp"]=""
 
-TASKS=("News21InstructionRetrieval" "Core17InstructionRetrieval" "Robust04InstructionRetrieval" )
+# TASKS=("News21InstructionRetrieval" "Core17InstructionRetrieval" "Robust04InstructionRetrieval" )
+# TASKS=("News21InstructionRetrieval")
+# TASKS=("Core17InstructionRetrieval")
+TASKS=("Robust04InstructionRetrieval")
 
 for MODEL in "${!MODELS[@]}"; do
     PEFT="${MODELS[$MODEL]}"
@@ -33,7 +36,7 @@ for MODEL in "${!MODELS[@]}"; do
     if [[ "$MODEL_NAME" == "Dream_emb" ]]; then
         SUFFIX="msmarco"
     else
-        SUFFIX="mntp-msmarco"
+        SUFFIX="msmarco"
     fi
 
     for TASK in "${TASKS[@]}"; do
@@ -42,8 +45,8 @@ for MODEL in "${!MODELS[@]}"; do
             --base_model_name_or_path "$MODEL" \
             --peft_model_name_or_path "$PEFT" \
             --task_name "$TASK" \
-            --output_dir "results/FollowIR/${TASK}/${MODEL_NAME}-${SUFFIX}" \
-            --batch_size 16
+            --output_dir "results/FollowIR-16k/${TASK}/${MODEL_NAME}-${SUFFIX}" \
+            --batch_size 64
     done
 done
 

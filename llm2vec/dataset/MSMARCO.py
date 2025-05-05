@@ -50,11 +50,11 @@ class MSMARCO(Dataset):
         assert self.split == 'train'
         dataset = load_dataset(file_path)[self.split]
         # we only use first k rows
-        dataset = dataset.select(range(32_000))
+        dataset = dataset.select(range(16_000))
         # shuffle rows
         # dataset = dataset.shuffle(seed=42) 
 
-        instruction = "Given a web search query, retrieve relevant passages that answer the query following the instructions"
+        instruction = "Retrieve text based on user query"
         all_samples = []
         id_ = 0
         
@@ -65,23 +65,22 @@ class MSMARCO(Dataset):
 
             # Get the first positive passage
             for pos in example['positive_passages']:
-                pos = pos['title'] + ' | ' + pos['text'] if 'title' in pos else pos['text']
+                pos = pos['title'] + ' ' + pos['text'] if 'title' in pos else pos['text']
                 pos = self.separator + pos
                 break
 
             new_negative_passages = []
             for neg in example['new_negatives']:
-                text = neg['title'] + ' | ' + neg['text'] if 'title' in neg else neg['text']
+                text = neg['title'] + ' ' + neg['text'] if 'title' in neg else neg['text']
                 new_negative_passages.append(self.separator + text)
 
             negative_passages = []
             for neg in example['negative_passages']:
-                text = neg['title'] + ' | ' + neg['text'] if 'title' in neg else neg['text']
+                text = neg['title'] + ' ' + neg['text'] if 'title' in neg else neg['text']
                 negative_passages.append(self.separator + text)
             
-            if len(new_negative_passages)>self.neg_num:
-                new_negative_passages = random.choices(new_negative_passages, k=self.neg_num)
-            add_neg_num = self.neg_num - len(new_negative_passages)
+            negatives_first_n = min(3, len(new_negative_passages))
+            add_neg_num = self.neg_num - negatives_first_n
 
             # If we don't have enough negatives, randomly sample with replacement
             if len(negative_passages) < add_neg_num:
@@ -90,7 +89,7 @@ class MSMARCO(Dataset):
                 # Randomly sample without replacement
                 negs = random.sample(negative_passages, k=add_neg_num)
             
-            negs = new_negative_passages + negs
+            negs = new_negative_passages[:negatives_first_n] + negs
             
             all_samples.append(
                 DataSample(
@@ -105,6 +104,7 @@ class MSMARCO(Dataset):
                 
         if self.shuffle_individual_datasets:
             random.shuffle(all_samples)
+            logger.info(f"Shuffling samples...")
             
         self.data = all_samples
         logger.info(f"Loaded {len(self.data)} samples.")
