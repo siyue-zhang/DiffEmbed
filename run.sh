@@ -4,16 +4,16 @@
 ## set 4 GPUs
 
 # torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Mistral_if.json
-# torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Dream_if.json
+torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Dream_if.json
 # torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/MetaLlama3_if.json
 # torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Qwen2_if.json
 
 ## test for instruction following retrieval
 ## set 1 GPU
 
-declare -A MODELS
+# declare -A MODELS
 ## Base direct
-MODELS["siyue/Dream_emb"]="/home/siyue/Projects/diffusion_embedder/output/Dream-msmarco-16k/MSMARCO_train_m-Dream_emb_p-mean_b-128_l-304_bidirectional-True_e-1_s-42_w-20_lr-0.0001_lora_r-32/checkpoint-125"
+# MODELS["siyue/Dream_emb"]="/home/siyue/Projects/diffusion_embedder/output/Dream-msmarco-16k/MSMARCO_train_m-Dream_emb_p-mean_b-128_l-304_bidirectional-True_e-1_s-42_w-20_lr-0.0001_lora_r-32/checkpoint-125"
 # MODELS["Qwen/Qwen2.5-7B-Instruct"]=""
 # MODELS["meta-llama/Meta-Llama-3-8B-Instruct"]=""
 # MODELS["mistralai/Mistral-7B-Instruct-v0.2"]=""
@@ -26,29 +26,29 @@ MODELS["siyue/Dream_emb"]="/home/siyue/Projects/diffusion_embedder/output/Dream-
 # TASKS=("News21InstructionRetrieval" "Core17InstructionRetrieval" "Robust04InstructionRetrieval" )
 # TASKS=("News21InstructionRetrieval")
 # TASKS=("Core17InstructionRetrieval")
-TASKS=("Robust04InstructionRetrieval")
+# TASKS=("Robust04InstructionRetrieval")
 
-for MODEL in "${!MODELS[@]}"; do
-    PEFT="${MODELS[$MODEL]}"
-    MODEL_NAME=$(basename "$MODEL")
+# for MODEL in "${!MODELS[@]}"; do
+#     PEFT="${MODELS[$MODEL]}"
+#     MODEL_NAME=$(basename "$MODEL")
 
-    # Custom output suffix based on model name
-    if [[ "$MODEL_NAME" == "Dream_emb" ]]; then
-        SUFFIX="msmarco"
-    else
-        SUFFIX="msmarco"
-    fi
+#     # Custom output suffix based on model name
+#     if [[ "$MODEL_NAME" == "Dream_emb" ]]; then
+#         SUFFIX="msmarco"
+#     else
+#         SUFFIX="msmarco"
+#     fi
 
-    for TASK in "${TASKS[@]}"; do
-        echo "Running $TASK with $MODEL_NAME..."
-        python experiments/mteb_eval_custom.py \
-            --base_model_name_or_path "$MODEL" \
-            --peft_model_name_or_path "$PEFT" \
-            --task_name "$TASK" \
-            --output_dir "results/FollowIR-16k/${TASK}/${MODEL_NAME}-${SUFFIX}" \
-            --batch_size 64
-    done
-done
+#     for TASK in "${TASKS[@]}"; do
+#         echo "Running $TASK with $MODEL_NAME..."
+#         python experiments/mteb_eval_custom.py \
+#             --base_model_name_or_path "$MODEL" \
+#             --peft_model_name_or_path "$PEFT" \
+#             --task_name "$TASK" \
+#             --output_dir "results/FollowIR-16k/${TASK}/${MODEL_NAME}-${SUFFIX}" \
+#             --batch_size 64
+#     done
+# done
 
 # -----------------------------------------------------------------------------------------#
 

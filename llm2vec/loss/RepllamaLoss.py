@@ -20,55 +20,55 @@ class RepllamaLoss:
         d_reps_negs: List[Tensor],
     ) -> Tensor:
 
-        batch_size = q_reps.size(0) # 4
+        batch_size = q_reps.size(0)
         embedding_dim = q_reps.size(-1)
 
-        if torch.distributed.is_initialized():
-            # Gather embeddings from all GPUs
-            full_q_reps = mismatched_sizes_all_gather(q_reps)
-            full_q_reps = torch.cat(full_q_reps)  # (16, 3584)
+        # if torch.distributed.is_initialized():
+        #     # Gather embeddings from all GPUs
+        #     full_q_reps = mismatched_sizes_all_gather(q_reps)
+        #     full_q_reps = torch.cat(full_q_reps)  # (16, 3584)
 
-            full_d_reps_pos = mismatched_sizes_all_gather(d_reps_pos)
-            full_d_reps_pos = torch.cat(full_d_reps_pos)  # (16, 3584)
+        #     full_d_reps_pos = mismatched_sizes_all_gather(d_reps_pos)
+        #     full_d_reps_pos = torch.cat(full_d_reps_pos)  # (16, 3584)
 
-            # Gather negative embeddings from all GPUs
-            full_d_reps_negs = []
-            for neg_tensor in d_reps_negs:  # 15 original negative batches
-                gathered_neg = mismatched_sizes_all_gather(neg_tensor)
-                gathered_neg = torch.cat(gathered_neg)  # Shape: (16, 3584)
-                full_d_reps_negs.append(gathered_neg)
+        #     # Gather negative embeddings from all GPUs
+        #     full_d_reps_negs = []
+        #     for neg_tensor in d_reps_negs:  # 15 original negative batches
+        #         gathered_neg = mismatched_sizes_all_gather(neg_tensor)
+        #         gathered_neg = torch.cat(gathered_neg)  # Shape: (16, 3584)
+        #         full_d_reps_negs.append(gathered_neg)
 
-            rank = torch.distributed.get_rank()
-            world_size = torch.distributed.get_world_size()
-            total_batch_size = batch_size * world_size  # 16
+        #     rank = torch.distributed.get_rank()
+        #     world_size = torch.distributed.get_world_size()
+        #     total_batch_size = batch_size * world_size  # 16
             
-            # Create reorganized negatives - each negative should contain batch_size samples
-            reorganized_negs = []
+        #     # Create reorganized negatives - each negative should contain batch_size samples
+        #     reorganized_negs = []
             
-            # 1. Keep original negative batches (15 batches)
-            current_idx = rank * batch_size
-            for neg_tensor in full_d_reps_negs:
-                reorganized_negs.append(neg_tensor[current_idx:current_idx+batch_size])  # (4, 3584)
+        #     # 1. Keep original negative batches (15 batches)
+        #     current_idx = rank * batch_size
+        #     for neg_tensor in full_d_reps_negs:
+        #         reorganized_negs.append(neg_tensor[current_idx:current_idx+batch_size])  # (4, 3584)
             
-            # 2. Add other GPUs' positive docs as negatives (3 GPUs * 4 samples = 12 batches)
-            for other_rank in range(world_size):
-                if other_rank != rank:
-                    start_idx = other_rank * batch_size
-                    pos_docs = full_d_reps_pos[start_idx:start_idx+batch_size]  # (4, 3584)
-                    reorganized_negs.append(pos_docs.expand(batch_size, -1))  # (4, 3584)
+        #     # 2. Add other GPUs' positive docs as negatives (3 GPUs * 4 samples = 12 batches)
+        #     for other_rank in range(world_size):
+        #         if other_rank != rank:
+        #             start_idx = other_rank * batch_size
+        #             pos_docs = full_d_reps_pos[start_idx:start_idx+batch_size]  # (4, 3584)
+        #             reorganized_negs.append(pos_docs.expand(batch_size, -1))  # (4, 3584)
             
-            # 3. Add other GPUs' negative docs (3 GPUs * 4 samples * 15 negs = 180 batches)
-            for other_rank in range(world_size):
-                if other_rank != rank:
-                    start_idx = other_rank * batch_size
-                    for neg_tensor in full_d_reps_negs:
-                        neg_docs = neg_tensor[start_idx:start_idx+batch_size]  # (4, 3584)
-                        reorganized_negs.append(neg_docs.expand(batch_size, -1))  # (4, 3584)
+        #     # 3. Add other GPUs' negative docs (3 GPUs * 4 samples * 15 negs = 180 batches)
+        #     for other_rank in range(world_size):
+        #         if other_rank != rank:
+        #             start_idx = other_rank * batch_size
+        #             for neg_tensor in full_d_reps_negs:
+        #                 neg_docs = neg_tensor[start_idx:start_idx+batch_size]  # (4, 3584)
+        #                 reorganized_negs.append(neg_docs.expand(batch_size, -1))  # (4, 3584)
             
-            # Update working tensors
-            q_reps = q_reps  # Keep original queries (4, 3584)
-            d_reps_pos = d_reps_pos  # Keep original positives (4, 3584)
-            d_reps_negs = reorganized_negs  # List[Tensor(4, 3584)] of length 207
+        #     # Update working tensors
+        #     q_reps = q_reps  # Keep original queries (4, 3584)
+        #     d_reps_pos = d_reps_pos  # Keep original positives (4, 3584)
+        #     d_reps_negs = reorganized_negs  # List[Tensor(4, 3584)] of length 207
         
         num_negatives = len(d_reps_negs)
 
