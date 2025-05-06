@@ -8,7 +8,9 @@ declare -A MODELS
 MODELS["McGill-NLP/LLM2Vec-Mistral-7B-Instruct-v2-mntp"]="/home/siyue/Projects/diffusion_embedder/output/!Mistral-7B-Instruct-mntp-e5/E5_train_m-Mistral-7B-Instruct-v0.2_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-1000"
 
 # TASKS=("AmazonCounterfactualClassification" "AmazonPolarityClassification" "AmazonReviewsClassification" "ArguAna" "ArxivClusteringP2P" "ArxivClusteringS2S" "AskUbuntuDupQuestions" "BIOSSES" "Banking77Classification" "BiorxivClusteringP2P" "BiorxivClusteringS2S" "CQADupstackTexRetrieval" "EmotionClassification" "FiQA2018" "HotpotQA" "ImdbClassification" "MSMARCO" "MTOPDomainClassification" "MTOPIntentClassification" "MassiveScenarioClassification" "MedrxivClusteringP2P" "MedrxivClusteringS2S" "MindSmallReranking" "NFCorpus" "NQ" "QuoraRetrieval" "RedditClustering" "RedditClusteringP2P" "SCIDOCS" "SICK-R" "STS12" "STS13" "STS14" "STS15" "STS16" "STS17" "STS22" "STSBenchmark" "SciDocsRR" "SciFact" "SprintDuplicateQuestions" "StackExchangeClustering" "StackExchangeClusteringP2P" "StackOverflowDupQuestions" "SummEval" "TRECCOVID" "Touche2020" "ToxicConversationsClassification" "TweetSentimentExtractionClassification" "TwentyNewsgroupsClustering" "TwitterSemEval2015" "TwitterURLCorpus" "FEVER" "DBPedia" "ClimateFEVER" "MassiveIntentClassification")
-TASKS=("ArguAna" "Banking77Classification" "BiorxivClusteringS2S" "EmotionClassification" "MedrxivClusteringS2S" "NFCorpus" "SciDocsRR" "SciFact" "SICK-R" "SprintDuplicateQuestions" "StackOverflowDupQuestions" "STS17" "STSBenchmark" "TwentyNewsgroupsClustering" "MassiveIntentClassification")
+# TASKS=("ArguAna" "Banking77Classification" "BiorxivClusteringS2S" "EmotionClassification" "MedrxivClusteringS2S" "NFCorpus" "SciDocsRR" "SciFact" "SICK-R" "SprintDuplicateQuestions" "StackOverflowDupQuestions" "STS17" "STSBenchmark" "TwentyNewsgroupsClustering" "MassiveIntentClassification")
+
+TASKS=("ArxivClusteringP2P" "BiorxivClusteringP2P" "MedrxivClusteringP2P" "RedditClusteringP2P" "StackExchangeClusteringP2P" "")
 
 for MODEL in "${!MODELS[@]}"; do
     PEFT="${MODELS[$MODEL]}"
