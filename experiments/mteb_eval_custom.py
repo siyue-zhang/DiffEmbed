@@ -85,6 +85,7 @@ if __name__ == "__main__":
     parser.add_argument("--batch_size", type=int, default=32)
     parser.add_argument("--preproc", action='store_true', help='A boolean flag (True if present, False if absent)')
     parser.add_argument("--fast_bright_root", type=str, default=None)
+    parser.add_argument("--enable_bidirectional", type=bool, default=True)
 
     args = parser.parse_args()
 
@@ -107,11 +108,12 @@ if __name__ == "__main__":
         with open(args.task_to_instructions_fp, "r") as f:
             task_to_instructions = json.load(f)
     
-    enable_bidirectional = True
+    enable_bidirectional = args.enable_bidirectional
     if args.base_model_name_or_path in [
         "intfloat/e5-mistral-7b-instruct",
     ]:
         enable_bidirectional = False
+    enable_bidirectional = False
     print("enable_bidirectional: ", enable_bidirectional)
 
     l2v_model = LLM2Vec.from_pretrained(

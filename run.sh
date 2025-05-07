@@ -15,7 +15,7 @@
 ## test for instruction following retrieval
 ## set 1 GPU
 
-declare -A MODELS
+# declare -A MODELS
 ## Base direct
 # MODELS["siyue/Dream_emb"]="/home/siyue/Projects/diffusion_embedder/output/Dream-msmarco/MSMARCO_train_m-Dream_emb_p-mean_b-128_l-304_bidirectional-True_e-1_s-42_w-20_lr-0.0001_lora_r-32/checkpoint-125"
 # MODELS["Qwen/Qwen2.5-7B-Instruct"]="/home/siyue/Projects/diffusion_embedder/output/Qwen2.5-7B-Instruct-msmarco/MSMARCO_train_m-Qwen2.5-7B-Instruct_p-mean_b-128_l-304_bidirectional-True_e-1_s-42_w-20_lr-0.0001_lora_r-32/checkpoint-125"
@@ -114,12 +114,12 @@ declare -A MODELS
 ## test for reasoning-intensive retrieval
 # set 4 GPUs
 
-# declare -A MODELS
+declare -A MODELS
 ## Base direct
 # MODELS["Qwen/Qwen2.5-7B-Instruct"]=""
 # MODELS["siyue/Dream_emb"]="/home/siyue/Projects/diffusion_embedder/output/Dream-TheoremAug/E5Mix_train_m-Dream_emb_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-680"
 # MODELS["meta-llama/Meta-Llama-3-8B-Instruct"]="/home/siyue/Projects/diffusion_embedder/output/Meta-Llama-3-8B-Instruct-mntp-TheoremAug/E5Mix_train_m-Meta-Llama-3-8B-Instruct_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-680"
-# MODELS["mistralai/Mistral-7B-Instruct-v0.2"]="/home/siyue/Projects/diffusion_embedder/output/Mistral-7B-Instruct-mntp-TheoremAug/E5Mix_train_m-Mistral-7B-Instruct-v0.2_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-680"
+MODELS["mistralai/Mistral-7B-Instruct-v0.2"]="/home/siyue/Projects/diffusion_embedder/output/Mistral-7B-Instruct-TheoremAug/E5Mix_train_m-Mistral-7B-Instruct-v0.2_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-680"
 
 ## MNTP
 # MODELS["McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp"]="/home/siyue/Projects/diffusion_embedder/output/!Meta-Llama-3-8B-Instruct-mntp-TheoremAug/E5Mix_train_m-Meta-Llama-3-8B-Instruct_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-680"
@@ -132,47 +132,37 @@ declare -A MODELS
 # TASKS=("BrightTheoremqaTheorems")
 # TASKS=("BrightTheoremqaTheorems" "BrightTheoremqaQuestions" "BrightAops" "BrightLeetcode")
 # TASKS=("BrightTheoremqaTheorems" "BrightTheoremqaQuestions")
-# TASKS=("BrightLeetcode")
+# TASKS=("BrightTheoremqaTheorems" "BrightLeetcode")
+TASKS=("BrightTheoremqaTheorems" "BrightLeetcode" "BrightTheoremqaQuestions")
 
-# for MODEL in "${!MODELS[@]}"; do
-#     PEFT="${MODELS[$MODEL]}"
-#     MODEL_NAME=$(basename "$MODEL")
+for MODEL in "${!MODELS[@]}"; do
+    PEFT="${MODELS[$MODEL]}"
+    MODEL_NAME=$(basename "$MODEL")
 
-#     if [[ "$MODEL_NAME" == *Dream* ]]; then
-#         SUFFIX="TheoremAug"
-#     else
-#         SUFFIX="unsup-simcse-TheoremAug"
-#     fi
-
-#     for TASK in "${TASKS[@]}"; do
-#         echo "Running $TASK with $MODEL_NAME..."
-#         python experiments/mteb_eval_custom.py \
-#             --base_model_name_or_path "$MODEL" \
-#             --peft_model_name_or_path "$PEFT" \
-#             --task_name "$TASK" \
-#             --output_dir "results/BRIGHT/${TASK}/${MODEL_NAME}-${SUFFIX}" \
-#             --batch_size 16
-#     done
-# done
+    SUFFIX="TheoremAug"
+    for TASK in "${TASKS[@]}"; do
+        echo "Running $TASK with $MODEL_NAME..."
+        python experiments/mteb_eval_custom.py \
+            --base_model_name_or_path "$MODEL" \
+            --peft_model_name_or_path "$PEFT" \
+            --task_name "$TASK" \
+            --output_dir "results/causal_BRIGHT/${TASK}/${MODEL_NAME}-${SUFFIX}" \
+            --batch_size 24
+    done
+done
 
 
 
 
 
 
-TASKS=("BrightLeetcode" "BrightTheoremqaTheorems" "BrightTheoremqaQuestions")
+TASKS=("BrightTheoremqaTheorems" "BrightLeetcode" "BrightTheoremqaQuestions")
 
 for TASK in "${TASKS[@]}"; do
     python experiments/mteb_eval_custom.py \
         --base_model_name_or_path "intfloat/e5-mistral-7b-instruct" \
         --task_name "$TASK" \
         --output_dir "results/BRIGHT/${TASK}/e5-mistral-7b-instruct" \
-        --batch_size 16
+        --batch_size 24 
 done
 
-
-python experiments/mteb_eval_custom.py \
-    --base_model_name_or_path "intfloat/e5-mistral-7b-instruct" \
-    --task_name "BrightTheoremqaTheorems"\
-    --output_dir "results/xxxBRIGHT/${TASK}/e5-mistral-7b-instruct" \
-    --batch_size 16
