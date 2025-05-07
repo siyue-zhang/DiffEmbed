@@ -101,6 +101,7 @@ class LLM2Vec(nn.Module):
             base_is_peft = True
             base_peft = "siyue/LLM2Vec-Qwen2.5-7B-Instruct-mntp"
             base_model_name_or_path = "Qwen/Qwen2.5-7B-Instruct"
+        
 
         tokenizer = AutoTokenizer.from_pretrained(base_model_name_or_path, trust_remote_code=True)
         tokenizer.pad_token = tokenizer.eos_token
@@ -168,6 +169,15 @@ class LLM2Vec(nn.Module):
                 llm2vec_config = json.load(fIn)
             config.update(llm2vec_config)
 
+        if base_model_name_or_path == "intfloat/e5-mistral-7b-instruct":
+            llm2vec_config = {
+                "pooling_mode": "eos_token",
+                "max_length": 4096,
+                "doc_max_length": 4096,
+                "skip_instruction": False,
+            }
+            config.update(llm2vec_config)
+
         for key, value in encoder_args.items():
             config[key] = value
 
@@ -199,7 +209,7 @@ class LLM2Vec(nn.Module):
         ##
         if self.model.config._name_or_path in [
             "Dream-org/Dream-v0-Instruct-7B",
-            "/home/siyue001/Projects/llm2vec_reason_dream/dream",
+            "siyue/Dream_emb",
         ]:
             text = "<|im_start|>user\n" + text.strip() + "<|im_end|>"
         ##
@@ -245,21 +255,7 @@ class LLM2Vec(nn.Module):
                 max_length=self.max_length,
                 add_special_tokens=False,
             )
-            # if embed_mask is None:
-            #     e_m = torch.zeros_like(original["attention_mask"][t_i])
-            #     if len(ids["input_ids"][0]) > 0:
-            #         e_m[-len(ids["input_ids"][0]) :] = torch.ones(
-            #             len(ids["input_ids"][0])
-            #         )
-            #     embed_mask = e_m.unsqueeze(0)
-            # else:
-            #     e_m = torch.zeros_like(original["attention_mask"][t_i])
-            #     if len(ids["input_ids"][0]) > 0:
-            #         e_m[-len(ids["input_ids"][0]) :] = torch.ones(
-            #             len(ids["input_ids"][0])
-            #         )
-            #     embed_mask = torch.cat((embed_mask, e_m.unsqueeze(0)), dim=0)
-        
+
             # Create mask of same size as original attention mask
             e_m = torch.zeros_like(original["attention_mask"][t_i])
             
@@ -305,18 +301,6 @@ class LLM2Vec(nn.Module):
         if self.skip_instruction:
             self._skip_instruction(features)
         seq_lengths = features["attention_mask"].sum(dim=-1)
-        
-        ###
-        # for i, length in enumerate(seq_lengths):
-        #     print("DEBUG last_hidden_states type:", type(last_hidden_states))
-        #     print(f"DEBUG last_hidden_states[{i}] type:", type(last_hidden_states[i]))
-        #     print("DEBUG length type:", type(length), "value:", length)
-        #     try:
-        #         print(seq_lengths)
-        #         print(last_hidden_states[i, -length:, :].mean(dim=0))
-        #     except Exception as e:
-        #         import ipdb; ipdb.set_trace()
-        ###
 
         if self.pooling_mode == "mean":
             return torch.stack(
@@ -526,6 +510,9 @@ class LLM2Vec(nn.Module):
 
         with torch.no_grad():
             embeddings = self.forward(features)
+            if self.model.config._name_or_path == "intfloat/e5-mistral-7b-instruct":
+                import torch.nn.functional as F
+                embeddings = F.normalize(embeddings, p=2, dim=-1)
             embeddings = embeddings.detach()
             embeddings = embeddings.cpu()
 

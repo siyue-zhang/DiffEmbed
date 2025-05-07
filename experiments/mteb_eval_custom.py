@@ -5,6 +5,7 @@ from typing import Any
 from mteb import mteb
 import json
 import torch
+from datasets import load_dataset
 
 import numpy as np
 from mteb.mteb.models.instructions import task_to_instruction
@@ -66,12 +67,12 @@ if __name__ == "__main__":
     parser.add_argument(
         "--base_model_name_or_path",
         type=str,
-        default="McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp",
+        default=None,
     )
     parser.add_argument(
         "--peft_model_name_or_path",
         type=str,
-        default="McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp-supervised",
+        default=None,
     )
     parser.add_argument("--task_name", type=str, default="STS16")
     parser.add_argument("--subset_name", type=str, default="leetcode")
@@ -106,20 +107,26 @@ if __name__ == "__main__":
         with open(args.task_to_instructions_fp, "r") as f:
             task_to_instructions = json.load(f)
     
-    
+    enable_bidirectional = True
+    if args.base_model_name_or_path in [
+        "intfloat/e5-mistral-7b-instruct",
+    ]:
+        enable_bidirectional = False
+    print("enable_bidirectional: ", enable_bidirectional)
+
     l2v_model = LLM2Vec.from_pretrained(
         args.base_model_name_or_path,
         peft_model_name_or_path=args.peft_model_name_or_path,
         device_map="cuda" if torch.cuda.is_available() else "cpu",
+        enable_bidirectional=enable_bidirectional,
         torch_dtype=torch.bfloat16,
-        merge_peft=True
+        merge_peft=True,
     )
 
     model = LLM2VecWrapper(model=l2v_model, task_to_instructions=task_to_instructions)
     tasks = mteb.get_tasks(tasks=[args.task_name])
     evaluation = mteb.MTEB(tasks=tasks)
 
-    from datasets import load_dataset
     if 'Bright' in args.task_name:
         data_examples = load_dataset("xlangai/BRIGHT", "examples")[args.subset_name]
         excluded_ids = data_examples["excluded_ids"]

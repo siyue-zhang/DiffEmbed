@@ -127,7 +127,6 @@ class MSMARCO(Dataset):
         print("doc len std: ", np.std(doc_avg_len, ddof=1))
         print("avg number of negatives: ", np.mean(num_neg))
 
-
     def __getitem__(self, index):
         sample = self.data[index]
         if self.split == "train":
