@@ -25,7 +25,6 @@ logger = logging.get_logger(__name__)
 class ModifiedDreamAttention(DreamAttention):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.is_causal = False
     
     def forward(
         self,
@@ -55,7 +54,6 @@ class ModifiedDreamAttention(DreamAttention):
 class ModifiedDreamSdpaAttention(DreamSdpaAttention):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.is_causal = False
     
     def forward(
         self,
@@ -68,6 +66,7 @@ class ModifiedDreamSdpaAttention(DreamSdpaAttention):
         cache_position: Optional[torch.LongTensor] = None,
         position_embeddings: Optional[torch.Tensor] = None,
     ) -> Tuple[torch.Tensor, Optional[torch.Tensor], Optional[Tuple[torch.Tensor]]]:
+
         # Convert attention mask to same dtype as hidden states
         if attention_mask is not None:
             attention_mask = attention_mask.to(dtype=hidden_states.dtype)
@@ -123,40 +122,17 @@ class DreamBiModel(DreamModel):
             ]
         )
 
-    def _update_causal_mask(
-        self,
-        attention_mask,
-        input_tensor,
-        cache_position,
-        past_key_values: Cache,
-        output_attentions: bool,
-    ):
-        if attention_mask is not None and 0.0 in attention_mask:
-            return attention_mask
-        return None
+    # def _update_causal_mask(
+    #     self,
+    #     attention_mask,
+    #     input_tensor,
+    #     cache_position,
+    #     past_key_values: Cache,
+    #     output_attentions: bool,
+    # ):
+    #     if attention_mask is not None and 0.0 in attention_mask:
+    #         return attention_mask
+    #     return None
 
 
 
-
-
-# class DreamBiForMNTP(PreTrainedModel):
-#     def __init__(self, config):
-#         PreTrainedModel.__init__(self, config)
-#         self.model = DreamBiModel(config)
-#         self.vocab_size = config.vocab_size
-#         self.lm_head = nn.Linear(config.hidden_size, config.vocab_size, bias=False)
-
-#         # Initialize weights and apply final processing
-#         self.post_init()
-
-#     # getter for PEFT model
-#     def get_model_for_peft(self):
-#         return self.model
-
-#     # setter for PEFT model
-#     def set_model_for_peft(self, model: PeftModel):
-#         self.model = model
-
-#     # save the PEFT model
-#     def save_peft_model(self, path):
-#         self.model.save_pretrained(path)

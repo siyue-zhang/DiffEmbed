@@ -251,7 +251,6 @@ class DreamAttention(nn.Module):
                 "to errors during the forward call, if caching is used. Please make sure to provide a `layer_idx` "
                 "when creating this class."
             )
-
         self.hidden_size = config.hidden_size
         self.num_heads = config.num_attention_heads
         self.head_dim = self.hidden_size // self.num_heads
@@ -259,7 +258,10 @@ class DreamAttention(nn.Module):
         self.num_key_value_groups = self.num_heads // self.num_key_value_heads
         self.max_position_embeddings = config.max_position_embeddings
         self.rope_theta = config.rope_theta
-        self.is_causal = False
+        # self.is_causal = False
+        # ...existing initialization...
+        self.is_causal = config.is_causal
+
         self.attention_dropout = config.attention_dropout
 
         if (self.head_dim * self.num_heads) != self.hidden_size:
@@ -316,10 +318,11 @@ class DreamAttention(nn.Module):
         value_states = repeat_kv(value_states, self.num_key_value_groups)
 
         attn_weights = torch.matmul(query_states, key_states.transpose(2, 3)) / math.sqrt(self.head_dim)
+
         if attention_mask is not None:  # no matter the length, we just slice it
             causal_mask = attention_mask[:, :, :, : key_states.shape[-2]]
             attn_weights = attn_weights + causal_mask
-
+        
         # upcast attention to fp32
         attn_weights = nn.functional.softmax(attn_weights, dim=-1, dtype=torch.float32).to(query_states.dtype)
         attn_weights = nn.functional.dropout(attn_weights, p=self.attention_dropout, training=self.training)
@@ -361,6 +364,7 @@ class DreamSdpaAttention(DreamAttention):
         cache_position: Optional[torch.LongTensor] = None,
         position_embeddings: Optional[Tuple[torch.Tensor, torch.Tensor]] = None,  # will become mandatory in v4.46
     ) -> Tuple[torch.Tensor, Optional[torch.Tensor], Optional[Tuple[torch.Tensor]]]:
+        
         if output_attentions:
             # TODO: Improve this warning with e.g. `model.config.attn_implementation = "manual"` once this is implemented.
             logger.warning_once(
@@ -427,7 +431,8 @@ class DreamSdpaAttention(DreamAttention):
             value_states,
             attn_mask=attention_mask if isinstance(attention_mask, torch.Tensor) else None,
             dropout_p=self.attention_dropout if self.training else 0.0,
-            is_causal=False, # hard coded
+            is_causal=self.is_causal,
+            # is_causal=False, # hard coded
         )
 
         attn_output = attn_output.transpose(1, 2).contiguous()

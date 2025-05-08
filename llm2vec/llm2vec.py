@@ -64,6 +64,8 @@ class LLM2Vec(nn.Module):
 
     @classmethod
     def _get_model_class(cls, config_class_name, enable_bidirectional):
+        if config_class_name == "DreamConfig" and not enable_bidirectional:
+            return DreamBiModel
         if not enable_bidirectional:
             return AutoModel
         if config_class_name == "MistralConfig":
@@ -177,6 +179,8 @@ class LLM2Vec(nn.Module):
                 "skip_instruction": False,
             }
             config.update(llm2vec_config)
+            print(f'load {base_model_name_or_path} to update llm2vec_config:')
+            print(llm2vec_config["pooling_mode"])
 
         for key, value in encoder_args.items():
             config[key] = value

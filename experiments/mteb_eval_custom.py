@@ -61,6 +61,15 @@ class LLM2VecWrapper:
     def encode_queries(self, queries: List[str], **kwargs: Any) -> np.ndarray:
         return self.encode(queries, **kwargs)
 
+def str2bool(v):
+    if isinstance(v, bool):
+        return v
+    if v.lower() in ("yes", "true", "t", "1"):
+        return True
+    elif v.lower() in ("no", "false", "f", "0"):
+        return False
+    else:
+        raise argparse.ArgumentTypeError("Boolean value expected.")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -85,7 +94,7 @@ if __name__ == "__main__":
     parser.add_argument("--batch_size", type=int, default=32)
     parser.add_argument("--preproc", action='store_true', help='A boolean flag (True if present, False if absent)')
     parser.add_argument("--fast_bright_root", type=str, default=None)
-    parser.add_argument("--enable_bidirectional", type=bool, default=True)
+    parser.add_argument("--enable_bidirectional", type=str2bool, default=True)
 
     args = parser.parse_args()
 
@@ -113,7 +122,6 @@ if __name__ == "__main__":
         "intfloat/e5-mistral-7b-instruct",
     ]:
         enable_bidirectional = False
-    enable_bidirectional = False
     print("enable_bidirectional: ", enable_bidirectional)
 
     l2v_model = LLM2Vec.from_pretrained(

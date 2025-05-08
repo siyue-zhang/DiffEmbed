@@ -28,6 +28,7 @@ class DreamConfig(PretrainedConfig):
 
     def __init__(
         self,
+        is_causal=False,  # dream default not causal
         vocab_size=151936,
         hidden_size=4096,
         intermediate_size=22016,
@@ -82,5 +83,7 @@ class DreamConfig(PretrainedConfig):
             tie_word_embeddings=tie_word_embeddings,
             **kwargs,
         )
+        self.is_causal = is_causal
+
         self.mask_token_id = mask_token_id
         self.pad_token_id = pad_token_id
