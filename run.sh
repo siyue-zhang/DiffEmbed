@@ -129,7 +129,7 @@ MODELS["siyue/Dream_emb"]="/home/siyue/Projects/diffusion_embedder/output/!Dream
 # MODELS["McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp"]="/home/siyue/Projects/diffusion_embedder/output/Meta-Llama-3-8B-Instruct-mntp-unsup-simcse-TheoremAug/E5Mix_train_m-LLM2Vec-Meta-Llama-3-8B-Instruct-mntp_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-680"
 # MODELS["McGill-NLP/LLM2Vec-Mistral-7B-Instruct-v2-mntp"]="/home/siyue/Projects/diffusion_embedder/output/Mistral-7B-Instruct-mntp-unsup-simcse-TheoremAug/E5Mix_train_m-LLM2Vec-Mistral-7B-Instruct-v2-mntp_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-680"
 
-TASKS=("BrightTheoremqaQuestions")
+TASKS=("BrightTheoremqaTheorems")
 # TASKS=("BrightTheoremqaTheorems" "BrightTheoremqaQuestions" "BrightAops" "BrightLeetcode")
 # TASKS=("BrightTheoremqaTheorems" "BrightTheoremqaQuestions")
 # TASKS=("BrightTheoremqaTheorems" "BrightLeetcode")
@@ -146,9 +146,8 @@ for MODEL in "${!MODELS[@]}"; do
             --base_model_name_or_path "$MODEL" \
             --peft_model_name_or_path "$PEFT" \
             --task_name "$TASK" \
-            --output_dir "results/causal_BRIGHT/${TASK}/${MODEL_NAME}-${SUFFIX}" \
-            --batch_size 32 \
-            --enable_bidirectional False
+            --output_dir "results/xxx_BRIGHT/${TASK}/${MODEL_NAME}-${SUFFIX}" \
+            --batch_size 32
     done
 done
 
