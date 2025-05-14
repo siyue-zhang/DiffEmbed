@@ -110,6 +110,7 @@ for i, instance in enumerate(instances):
     idxs = [j for j, label in enumerate(labels) if label == instance]
     if not idxs:
         continue
+    points = embeddings_2d[idxs]
     plt.scatter(
         embeddings_2d[idxs, 0],
         embeddings_2d[idxs, 1],
@@ -118,6 +119,19 @@ for i, instance in enumerate(instances):
         color=colors[i],
         s=100  # Marker size
     )
+
+
+    # Add text labels for each point
+    for point in points:
+        plt.annotate(
+            instance,
+            (point[0], point[1]),
+            xytext=(5, 5),  # Small offset from the point
+            textcoords='offset points',
+            fontsize=12,
+            color=colors[i],
+            alpha=0.8
+        )
 
 # plt.title("t-SNE of LLM2Vec Embeddings")
 # plt.legend()

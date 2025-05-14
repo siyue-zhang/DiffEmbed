@@ -3,13 +3,14 @@ import numpy as np
 import re
 
 
-# subset = 'leetcode'
-# predictions = "/home/siyue/Projects/diffusion_embedder/results/BRIGHT/BrightLeetcode/Dream_emb-TheoremAug/BrightLeetcode_leetcode_predictions.json"
+subset = 'leetcode'
+predictions = "/home/siyue/Projects/diffusion_embedder/results/BRIGHT/BrightLeetcode/Dream_emb-TheoremAug/BrightLeetcode_leetcode_predictions.json"
 # predictions2 = "/home/siyue/Projects/diffusion_embedder/results/BRIGHT/BrightLeetcode/e5-mistral-7b-instruct/BrightLeetcode_leetcode_predictions.json"
+predictions2 = "/home/siyue/Projects/diffusion_embedder/results/BRIGHT/BrightLeetcode/e5-mistral-7b-instruct/BrightLeetcode_leetcode_predictions.json"
 
-subset = 'theoremqa_questions'
-predictions = "/home/siyue/Projects/diffusion_embedder/results/BRIGHT/BrightTheoremqaQuestions/Dream_emb-TheoremAug/BrightTheoremqaQuestions_theoremqa_questions_predictions.json"
-predictions2 = "/home/siyue/Projects/diffusion_embedder/results/BRIGHT/BrightTheoremqaQuestions/e5-mistral-7b-instruct/BrightTheoremqaQuestions_theoremqa_questions_predictions.json"
+# subset = 'theoremqa_questions'
+# predictions = "/home/siyue/Projects/diffusion_embedder/results/BRIGHT/BrightTheoremqaQuestions/Dream_emb-TheoremAug/BrightTheoremqaQuestions_theoremqa_questions_predictions.json"
+# predictions2 = "/home/siyue/Projects/diffusion_embedder/results/BRIGHT/BrightTheoremqaQuestions/e5-mistral-7b-instruct/BrightTheoremqaQuestions_theoremqa_questions_predictions.json"
 
 
 def load_json(file_path):
@@ -89,9 +90,40 @@ for example in data_examples:
     # Count exclusive findings
     if dream_found_gold and not e5_found_gold:
         dream_only += 1
+        
+        # # Print query and document information
+        # print("\n=== Case where Dream found gold but E5 didn't ===")
+        # print(f"Query: {query}")
+        # dream_gold_ids = [k for k, v in dream.items() if v]
+        # print(f"Dream found gold document(s): {dream_gold_ids}")
+        # print("Gold document content:")
+        # for gold_id in dream_gold_ids:
+        #     print(f"- {doc_lookup[gold_id]}...")  # Show first 300 chars
+        # print("\nE5 top prediction:")
+        # e5_top_id = list(predictions2[query_id].keys())[0]
+        # print(f"- {doc_lookup[e5_top_id]}...")
+        # print("=" * 80)
+        
+        # input()
+
     if e5_found_gold and not dream_found_gold:
         e5_only += 1
-    
+
+        # Print query and document information
+        print("\n=== Case where E5 found gold but Dream didn't ===")
+        print(f"Query: {query}")
+        e5_gold_ids = [k for k, v in e5.items() if v]
+        print(f"E5 found gold document(s): {e5_gold_ids}")
+        print("Gold document content:")
+        for gold_id in e5_gold_ids:
+            print(f"- {doc_lookup[gold_id]}...")  # Show first 300 chars
+        print("\nDream top prediction:")
+        dream_top_id = list(predictions[query_id].keys())[0]
+        print(f"- {doc_lookup[dream_top_id]}...")
+        print("=" * 80)
+        
+        input()
+
     # Check shared correct predictions
     dream_correct_ids = {k for k, v in dream.items() if v}
     e5_correct_ids = {k for k, v in e5.items() if v}
