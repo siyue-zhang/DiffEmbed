@@ -7,11 +7,11 @@ instances = ["Vieta's Formulas", "Pigeonhole Principle", "Euler's Identity", "Ce
              "Two Pointers", "N-Queens Problem", "Sweep Line Algorithm", "Kahn's Algorithm"]
 
 # Create a simple plot with 2 rows and 4 columns
-plt.figure(figsize=(7.5, 3)) # Adjusted height for 2 rows
+plt.figure(figsize=(5, 3)) # Adjusted height for 2 rows
 colors = cm.rainbow(np.linspace(0, 1, len(instances)))
 
 # Create grid positions
-x = np.array([0, 1, 2, 3] * 2)  # Column positions
+x = np.array([0, 0.7, 1.4, 2.1] * 2)  # Reduced spacing between columns
 y = np.array([0] * 4 + [1] * 4)  # Row positions
 
 # Plot points and labels
@@ -37,7 +37,7 @@ for i, (instance, color) in enumerate(zip(instances, colors)):
                 fontsize=16)
 
 plt.ylim(-0.5, 1.5)
-plt.xlim(-0.5, 3.5)
+plt.xlim(-0.3, 2.7)  # Adjusted x-axis limits to match new spacing
 plt.axis('off')
 plt.tight_layout()
 plt.savefig("color_mapping.pdf", dpi=300, bbox_inches='tight', pad_inches=0.2)

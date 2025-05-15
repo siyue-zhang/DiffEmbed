@@ -121,17 +121,17 @@ for i, instance in enumerate(instances):
     )
 
 
-    # Add text labels for each point
-    for point in points:
-        plt.annotate(
-            instance,
-            (point[0], point[1]),
-            xytext=(5, 5),  # Small offset from the point
-            textcoords='offset points',
-            fontsize=12,
-            color=colors[i],
-            alpha=0.8
-        )
+    # # Add text labels for each point
+    # for point in points:
+    #     plt.annotate(
+    #         instance,
+    #         (point[0], point[1]),
+    #         xytext=(5, 5),  # Small offset from the point
+    #         textcoords='offset points',
+    #         fontsize=12,
+    #         color=colors[i],
+    #         alpha=0.8
+    #     )
 
 # plt.title("t-SNE of LLM2Vec Embeddings")
 # plt.legend()
@@ -139,7 +139,7 @@ for i, instance in enumerate(instances):
 # plt.xlabel("t-SNE Dimension 1")
 # plt.ylabel("t-SNE Dimension 2")
 plt.tight_layout()
-plt.savefig("e5_tsne_plot.png", dpi=300)
+plt.savefig("e5_tsne_plot.pdf", dpi=300)
 plt.show()
 
 
