@@ -248,10 +248,10 @@ class E5Mix(Dataset):
         query_avg_len = []
         doc_avg_len = []
 
-        for d in self.data:
-            query_avg_len.append(gpt2_token_count(d.query))
-            doc_avg_len.append(gpt2_token_count(d.positive))
-            doc_avg_len.append(gpt2_token_count(d.negative))
+        # for d in self.data:
+        #     query_avg_len.append(gpt2_token_count(d.query))
+        #     doc_avg_len.append(gpt2_token_count(d.positive))
+        #     doc_avg_len.append(gpt2_token_count(d.negative))
 
         print("query len mean: ", np.mean(query_avg_len))
         print("query len std: ", np.std(query_avg_len, ddof=1))
