@@ -21,9 +21,9 @@
     "doc_max_length": 4096,
     "skip_instruction": false,
     "overwrite_output_dir": true,
-    "output_dir": "output/Qwen2.5-7B-Instruct-TheoremAug",
+    "output_dir": "output/Qwen2.5-7B-TheoremAug-steps",
     "logging_steps": 20,
-    "save_steps": 500,
+    "save_steps": 100,
     "save_only_model": true,
     "stop_after_n_steps": 1000,
     "lora_r": 16,
@@ -32,6 +32,6 @@
     "attn_implementation": "flash_attention_2",
     "seed": 42,
     "report_to": ["wandb"],
-    "run_name": "Qwen2.5-7B-Instruct-TheoremAug",
+    "run_name": "Qwen2.5-7B-TheoremAug-steps",
     "loss_class": "HardNegativeNLLLoss"
 }

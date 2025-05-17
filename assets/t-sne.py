@@ -1,5 +1,5 @@
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 
 import torch
 from llm2vec import LLM2Vec
@@ -8,7 +8,7 @@ import numpy as np
 from sklearn.manifold import TSNE
 
 # Load data
-data_path = '/home/siyue001/Projects/llm2vec_reason_dream/TheoremAug/output/TheoremAug.jsonl'
+data_path = '/home/siyue/Projects/diffusion_embedder/TheoremAug/TheoremAug.jsonl'
 data = load_jsonl(data_path)
 
 # Define instances to process
@@ -16,19 +16,19 @@ instances = ["Vieta's Formulas", "Pigeonhole Principle", "Euler's Identity", "Ce
              "Two Pointers", "N-Queens Problem", "Sweep Line Algorithm", "Kahn's Algorithm"]
 
 # Load model
-l2v = LLM2Vec.from_pretrained(
-    "McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp",
-    # peft_model_name_or_path="McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp-unsup-simcse",
-    # peft_model_name_or_path="/home/siyue001/Projects/llm2vec_reason_dream/output/simcse/Meta-Llama-3-8B-Instruct-mntp-simcse-TheoremAug-4omini-all-v0.2/E5Mix_train_m-Meta-Llama-3-8B-Instruct_p-mean_b-32_l-3000_bidirectional-True_e-3_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-800",
-    device_map="cuda" if torch.cuda.is_available() else "cpu",
-    torch_dtype=torch.bfloat16,
-)
 # l2v = LLM2Vec.from_pretrained(
-#     "/home/siyue001/Projects/llm2vec_reason_dream/dream",
-#     peft_model_name_or_path="",
+#     "McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp",
+#     # peft_model_name_or_path="McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp-unsup-simcse",
+#     # peft_model_name_or_path="/home/siyue001/Projects/llm2vec_reason_dream/output/simcse/Meta-Llama-3-8B-Instruct-mntp-simcse-TheoremAug-4omini-all-v0.2/E5Mix_train_m-Meta-Llama-3-8B-Instruct_p-mean_b-32_l-3000_bidirectional-True_e-3_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-800",
 #     device_map="cuda" if torch.cuda.is_available() else "cpu",
 #     torch_dtype=torch.bfloat16,
 # )
+l2v = LLM2Vec.from_pretrained(
+    "siyue/Dream_emb",
+    peft_model_name_or_path="/home/siyue/Projects/diffusion_embedder/output/!Dream-TheoremAug/E5Mix_train_m-Dream_emb_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-680",
+    device_map="cuda" if torch.cuda.is_available() else "cpu",
+    torch_dtype=torch.bfloat16,
+)
 
 # Collect and encode data for each instance
 all_embeddings = []
@@ -99,7 +99,7 @@ for i, instance in enumerate(instances):
 # plt.xlabel("t-SNE Dimension 1")
 # plt.ylabel("t-SNE Dimension 2")
 plt.tight_layout()
-plt.savefig("not_finetuned_tsne_plot.png", dpi=300)
+plt.savefig("finetuned_tsne_plot.pdf", dpi=300)
 plt.show()
 
 

@@ -29,16 +29,19 @@ def last_token_pool(last_hidden_states: Tensor,
 def get_detailed_instruct(task_description: str, query: str) -> str:
     return f'Instruct: {task_description}\nQuery: {query}'
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+# Move model to GPU
 tokenizer = AutoTokenizer.from_pretrained('intfloat/e5-mistral-7b-instruct')
 model = AutoModel.from_pretrained('intfloat/e5-mistral-7b-instruct')
+model = model.to(device)
 
 max_length = 4096
 # Tokenize the input texts
 
 
 # Load data
-data_path = '/home/siyue001/Projects/llm2vec_reason_dream/TheoremAug/output/TheoremAug.jsonl'
+data_path = '/home/siyue/Projects/diffusion_embedder/TheoremAug/TheoremAug.jsonl'
 data = load_jsonl(data_path)
 
 # Define instances to process
@@ -56,12 +59,15 @@ for instance in instances:
         continue
 
     batch_dict = tokenizer(group, max_length=max_length, padding=True, truncation=True, return_tensors='pt')
+    # Move batch to GPU
+    batch_dict = {k: v.to(device) for k, v in batch_dict.items()}
 
-    outputs = model(**batch_dict)
+    with torch.no_grad():  # Add this for inference
+        outputs = model(**batch_dict)
     embeddings = last_token_pool(outputs.last_hidden_state, batch_dict['attention_mask'])
 
     reps = torch.nn.functional.normalize(embeddings, p=2, dim=1)
-    all_embeddings.append(reps.cpu().numpy())
+    all_embeddings.append(reps.cpu().numpy())  # Move back to CPU before converting to numpy
     labels.extend([instance] * len(reps))
 
 # Combine all embeddings
@@ -104,6 +110,7 @@ for i, instance in enumerate(instances):
     idxs = [j for j, label in enumerate(labels) if label == instance]
     if not idxs:
         continue
+    points = embeddings_2d[idxs]
     plt.scatter(
         embeddings_2d[idxs, 0],
         embeddings_2d[idxs, 1],
@@ -113,13 +120,26 @@ for i, instance in enumerate(instances):
         s=100  # Marker size
     )
 
+
+    # # Add text labels for each point
+    # for point in points:
+    #     plt.annotate(
+    #         instance,
+    #         (point[0], point[1]),
+    #         xytext=(5, 5),  # Small offset from the point
+    #         textcoords='offset points',
+    #         fontsize=12,
+    #         color=colors[i],
+    #         alpha=0.8
+    #     )
+
 # plt.title("t-SNE of LLM2Vec Embeddings")
 # plt.legend()
 # plt.grid(True)
 # plt.xlabel("t-SNE Dimension 1")
 # plt.ylabel("t-SNE Dimension 2")
 plt.tight_layout()
-plt.savefig("e5_tsne_plot.png", dpi=300)
+plt.savefig("e5_tsne_plot.pdf", dpi=300)
 plt.show()
 
 

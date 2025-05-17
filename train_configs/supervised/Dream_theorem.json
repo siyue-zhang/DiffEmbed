@@ -21,7 +21,7 @@
     "doc_max_length": 4096,
     "skip_instruction": false,
     "overwrite_output_dir": true,
-    "output_dir": "output/Dream-TheoremAug",
+    "output_dir": "output/Dream-TheoremAug-steps",
     "logging_steps": 20,
     "save_steps": 100,
     "save_only_model": true,
@@ -32,6 +32,6 @@
     "attn_implementation": "sdpa",
     "seed": 42,
     "report_to": ["wandb"],
-    "run_name": "Dream-TheoremAug",
+    "run_name": "Dream-TheoremAug-steps",
     "loss_class": "HardNegativeNLLLoss"
 }
