@@ -3,7 +3,7 @@ from matplotlib.ticker import FuncFormatter
 
 # Data points
 dream_x = [3200, 4800, 6400, 9600, 10880]
-dream_y = [37.7, 42.2, 43.8, 48.3]  # Replace with actual Dream data if available
+dream_y = [32.2, 39.1, 45.8, 44.8, 47.4]  # Replace with actual Dream data if available
 qwen_x = [3200, 6400, 9600, 10880]
 qwen_y = [36.4, 35.9, 38, 40.2]
 
@@ -23,7 +23,7 @@ plt.gca().xaxis.set_major_formatter(FuncFormatter(format_x_k))
 plt.xticks([2000, 4000, 6000, 8000, 10000, 12000], fontsize=24)
 plt.yticks([35, 40, 45, 50], fontsize=24)
 
-plt.ylim([33,50])
+plt.ylim([30,50])
 # Axis labels
 # plt.xlabel('Number of training samples', fontsize=20, labelpad=15)
 plt.ylabel('TheoQ. nDCG@10(%)', fontsize=24, labelpad=20)
@@ -36,4 +36,4 @@ plt.legend(fontsize=24)
 
 # Save to PDF
 plt.tight_layout()
-plt.savefig("plot.pdf")
+plt.savefig("new_plot.pdf")
