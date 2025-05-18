@@ -2,10 +2,10 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 
 # Data points
-dream_x = [3200, 4800, 6400, 9600, 10880]
-dream_y = [32.2, 39.1, 45.8, 44.8, 47.4]  # Replace with actual Dream data if available
-qwen_x = [3200, 6400, 9600, 10880]
-qwen_y = [36.4, 35.9, 38, 40.2]
+dream_x = [3200, 4800, 6400, 8000, 9600, 10880]
+dream_y = [32.2, 39.1, 45.8, 44.8, 47.4, 48.4]  # Replace with actual Dream data if available
+qwen_x = [3200, 4800, 6400, 8000, 9600, 10880]
+qwen_y = [36.4, 30.5, 35.9, 35.3, 38, 40.2]
 
 # Formatter function for x-axis
 def format_x_k(x, pos):
