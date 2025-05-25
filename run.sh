@@ -109,17 +109,21 @@
 # torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Dream_theorem.json
 # torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Mistral_theorem.json
 # torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/MetaLlama3_theorem.json
-torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Qwen2_theorem.json
+# torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Qwen2_theorem.json
+
+# torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/diffusion_embedder/train_configs/supervised/Dream_reason.json
 
 ## test for reasoning-intensive retrieval
 # set 4 GPUs
 
-# declare -A MODELS
+declare -A MODELS
 ## Base direct
 # MODELS["Qwen/Qwen2.5-7B-Instruct"]="/home/siyue/Projects/diffusion_embedder/output/Qwen2.5-7B-Instruct-TheoremAug/E5Mix_train_m-Qwen2.5-7B-Instruct_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-680"
 # MODELS["siyue/Dream_emb"]="/home/siyue/Projects/diffusion_embedder/output/!Dream-TheoremAug/E5Mix_train_m-Dream_emb_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-680"
 # MODELS["meta-llama/Meta-Llama-3-8B-Instruct"]="/home/siyue/Projects/diffusion_embedder/output/Meta-Llama-3-8B-Instruct-mntp-TheoremAug/E5Mix_train_m-Meta-Llama-3-8B-Instruct_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-680"
 # MODELS["mistralai/Mistral-7B-Instruct-v0.2"]="/home/siyue/Projects/diffusion_embedder/output/Mistral-7B-Instruct-TheoremAug/E5Mix_train_m-Mistral-7B-Instruct-v0.2_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-680"
+
+MODELS["siyue/Dream_emb"]="/home/siyue/Projects/diffusion_embedder/output/Dream-ReasonIR-mix/ReasonIR_train_m-Dream_emb_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-1e-05_lora_r-16/checkpoint-2750"
 
 ## MNTP
 # MODELS["McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp"]="/home/siyue/Projects/diffusion_embedder/output/!Meta-Llama-3-8B-Instruct-mntp-TheoremAug/E5Mix_train_m-Meta-Llama-3-8B-Instruct_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-680"
@@ -133,7 +137,7 @@ torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/d
 # TASKS=("BrightTheoremqaTheorems")
 # TASKS=("BrightTheoremqaTheorems" "BrightTheoremqaQuestions" "BrightAops" "BrightLeetcode")
 # TASKS=("BrightTheoremqaTheorems" "BrightTheoremqaQuestions")
-# TASKS=("BrightLeetcode")
+TASKS=("BrightBiology" "BrightEconomics" "BrightStackOverflow" "BrightTheoremqaTheorems")
 # TASKS=("BrightTheoremqaTheorems" "BrightLeetcode" "BrightTheoremqaQuestions")
 
 # for MODEL in "${!MODELS[@]}"; do
@@ -151,6 +155,25 @@ torchrun --nproc_per_node=4 experiments/run_supervised.py /home/siyue/Projects/d
 #             --batch_size 16
 #     done
 # done
+
+
+for MODEL in "${!MODELS[@]}"; do
+    PEFT="${MODELS[$MODEL]}"
+    MODEL_NAME=$(basename "$MODEL")
+
+    SUFFIX="ReasonIR"
+    for TASK in "${TASKS[@]}"; do
+        echo "Running $TASK with $MODEL_NAME..."
+        python experiments/mteb_eval_custom.py \
+            --base_model_name_or_path "$MODEL" \
+            --peft_model_name_or_path "$PEFT" \
+            --task_name "$TASK" \
+            --output_dir "results/ReasonIR_mix_BRIGHT/${TASK}/${MODEL_NAME}-${SUFFIX}" \
+            --batch_size 16
+    done
+done
+
+
 
 
 # TASKS=("BrightTheoremqaTheorems" "BrightLeetcode" "BrightTheoremqaQuestions")

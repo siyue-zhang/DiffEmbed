@@ -2,6 +2,7 @@ from ..dataset import E5Data
 from ..dataset import E5Mix
 from ..dataset import Wiki1M
 from ..dataset import MSMARCO
+from ..dataset import ReasonIR
 
 def load_dataset(dataset_name, split="validation", file_path=None, **kwargs):
     """
@@ -18,6 +19,7 @@ def load_dataset(dataset_name, split="validation", file_path=None, **kwargs):
         "Wiki1M": Wiki1M,
         "E5Mix": E5Mix,
         "MSMARCO": MSMARCO,
+        "ReasonIR": ReasonIR
     }
 
     if dataset_name not in dataset_mapping:

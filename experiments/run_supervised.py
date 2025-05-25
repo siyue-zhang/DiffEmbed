@@ -1,7 +1,7 @@
 import logging
 from dataclasses import dataclass, field
 import os
-os.environ["WANDB_PROJECT"] = "IF"
+os.environ["WANDB_PROJECT"] = "ReasonIR"
 os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2,3"
 import sys
 from typing import Any, Dict, List, Optional, Tuple, Union
@@ -225,7 +225,7 @@ class DataTrainingArguments:
         metadata={"help": "Whether to use e5 data during training."},
     )
     aug_file_path: Optional[str] = field(
-        default='/home/siyue/Projects/llm2vec_reason/augmentation/output/augmentation_data.jsonl',
+        default=None,
     )
 
 @dataclass

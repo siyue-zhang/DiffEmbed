@@ -4,9 +4,9 @@ import os
 import tiktoken
 import numpy as np
 from collections import defaultdict
-
 from .dataset import DataSample, TrainSample, Dataset
 from accelerate.logging import get_logger
+from datasets import load_dataset
 
 logger = get_logger(__name__, log_level="INFO")
 
@@ -39,16 +39,35 @@ def gpt2_token_count(text):
     tokens = enc.encode(text)
     return len(tokens)
 
-class E5Mix(Dataset):
+def get_doc_and_ids(doc_pairs):
+    doc_ids = []
+    documents = []
+    for dp in doc_pairs:
+        doc_ids.append(str(dp['id']))
+        documents.append(dp['content'])
+    return documents, doc_ids
+    
+def process_pos_id2doc(entry, id2doc):
+    pos_docs = entry["pos"]
+    res = []
+    for pos in pos_docs:
+        instruction, doc_id = pos[0], pos[1]
+        doc = id2doc[doc_id]
+        res.append([instruction, doc])
+    entry["pos"] = res
+    return entry
+
+
+class ReasonIR(Dataset):
     def __init__(
         self,
-        dataset_name: str = "E5Mix",
-        split: str = "validation",
-        file_path: str = "cache/echo-data",
-        aug_file_path: str = None,
+        dataset_name: str = "ReasonIR",
+        split: str = "train",
+        file_path: str = None,
         effective_batch_size: int = 32,
         shuffle_individual_datasets: bool = True,
         separator: str = "!@#$%^&*()",
+        aug_file_path: str = "reasonir/reasonir-data",
         domain: str = 'all',
         task: str = 'all',
         add_e5: bool = False
@@ -58,11 +77,7 @@ class E5Mix(Dataset):
         self.effective_batch_size = effective_batch_size
         self.shuffle_individual_datasets = shuffle_individual_datasets
         self.separator = separator
-
-        # NEW
         self.aug_file_path = aug_file_path
-        self.domain = domain
-        self.task = task
         self.add_e5 = add_e5
 
         self.data = []
@@ -72,13 +87,12 @@ class E5Mix(Dataset):
         return len(self.data)
 
     def load_data(self, file_path: str = None):
-        # logger.info(f"Loading E5 data from {file_path}...")
-        # # file path is actually a directory
 
         data_map = {}
         all_samples = []
         id_ = 0
         if self.add_e5:
+            logger.info(f"Loading E5 data from {file_path}...")
             for dataset in E5_EMBEDDING_PROMPTS:
                 logger.info(f"Loading dataset {dataset}...")
                 if dataset not in data_map:
@@ -137,9 +151,10 @@ class E5Mix(Dataset):
             data_map = new_data_map
 
             # equalize size for each one
+            keep = 2_000
             for dataset in data_map:
-                if len(data_map[dataset])>3000:
-                    data_map[dataset] = random.sample(data_map[dataset],3000)
+                if len(data_map[dataset]) > keep:
+                    data_map[dataset] = random.sample(data_map[dataset], keep)
                 # print(dataset, len(data_map[dataset]))
 
             if self.shuffle_individual_datasets:
@@ -162,59 +177,53 @@ class E5Mix(Dataset):
                         logger.info(f"Skip 1 batch for dataset {dataset}.")
             random.shuffle(all_batches)
 
-        ## NEW
-        with open(self.aug_file_path, "r", encoding="utf-8") as f:
-            augment_samples = f.readlines()
-        augment_samples = [json.loads(d) for d in augment_samples]
-        print('total number: ', len(augment_samples))
-        ##
 
-        domain_map = {
-            'aops': ['math'],
-            'leetcode': ['coding'],
-            'theoremqa': ['math','physics','finance'],
-            'all':['math','physics','finance','coding','math']
-        }
-        domain_question_mapping = {
-            'algorithm': 'coding',
-            'data structure': 'coding',
-            'math theorem': 'math',
-            'physics theorem': 'physics',
-            'finance formula': 'finance',
-        }
+        logger.info(f"Loading ReasonIR data ...")
+        # file path is actually a directory
+
+        assert self.split == 'train'  
+        hq_dataset = load_dataset(self.aug_file_path, "hq")
+        bright_docs = load_dataset("xlangai/BRIGHT", "documents")
+        all_docs = []   
+        all_ids = []
+        for task in bright_docs.keys():
+            docs, ids = get_doc_and_ids(bright_docs[task])
+            all_docs.extend(docs)
+            all_ids.extend(ids)
+
+        id2doc = {}
+        for i in range(len(all_docs)):
+            id2doc[all_ids[i]] = all_docs[i]
+
+        hq_dataset = hq_dataset.map(lambda x: process_pos_id2doc(x, id2doc))
+        vl_dataset = load_dataset(self.aug_file_path, "vl")
+
+        hq_dataset = hq_dataset[self.split].shuffle(seed=42).select(range(10_000))
+        vl_dataset = vl_dataset[self.split].shuffle(seed=42).select(range(10_000))
+
+        # hq_dataset = hq_dataset[self.split].shuffle(seed=42)
+        # vl_dataset = vl_dataset[self.split].shuffle(seed=42)
 
         self.all_samples = defaultdict(lambda: [])
+        for data in [hq_dataset, vl_dataset]:
+            for example in data:
+                instruction = example['query'][0]
+                instruction = instruction.strip()
+                if len(instruction)>0 and instruction[-1]=='.':
+                    instruction=instruction[:-1]
+                query = f"{instruction}; " + self.separator + example['query'][1]
+                pos = example['pos'][0]
+                pos = pos[0] + '; ' + self.separator + pos[1]
+                neg = example['neg'][0]
+                neg = neg[0] + '; ' + self.separator + neg[1]
 
-        for id_, augment_sample in enumerate(augment_samples):
-            # domain filter
-            sample_domain = augment_sample['domain']
-            sample_domain_type = domain_question_mapping[sample_domain]
-            #
-            # if sample_domain == 'data structure':
-            #     continue
-            #
-            if sample_domain_type not in domain_map[self.domain]:
-                continue
-            if augment_sample['hard_negative_document'] == None:
-                continue
-            # task filter
-            if self.task != 'all' and augment_sample['task_type'] != self.task:
-                continue
-
-            instruction = augment_sample["task"]
-            query = f"{instruction}; " + self.separator + augment_sample["user_query"]
-            pos = self.separator + augment_sample["positive_document"]
-            neg = self.separator + augment_sample["hard_negative_document"]
-            self.all_samples[instruction].append(DataSample(
-                        id_=id_,
-                        query=query,
-                        positive=pos,
-                        negative=neg,
-                        task_name='augment',
-                        pos_instance=augment_sample['instance'],
-                        neg_instance=augment_sample['negative_instance'],
-                        batch_negatives=None
-                    ))
+                self.all_samples[instruction].append(DataSample(
+                            id_=id_,
+                            query=query,
+                            positive=pos,
+                            negative=neg,
+                            task_name='reasonir',
+                        ))
          
         self.data = []
         for dataset in self.all_samples:
@@ -225,17 +234,14 @@ class E5Mix(Dataset):
                     popped_items.append(self.all_samples[dataset].pop(random_index))
                 self.data.append(popped_items)
 
-        random.shuffle(self.data)
         
         logger.info(f"Loaded {len(self.data)*self.effective_batch_size} augmented samples.")
         
         if self.add_e5:
-            e5 = random.sample(all_batches, int(30000/self.effective_batch_size))
             tmp = []
-            for batch in e5:
+            for batch in all_batches:
                 tmp.append([all_samples[idx] for idx in batch])
-            e5 = tmp
-            self.data += e5
+            self.data += tmp
 
 
         random.shuffle(self.data)
@@ -266,4 +272,4 @@ class E5Mix(Dataset):
                 texts=[sample.query, sample.positive, sample.negative], label=1.0
             )
         elif self.split == "validation":
-            assert False, "E5Mix does not have a validation split."
+            assert False, "ReasonIR does not have a validation split."
