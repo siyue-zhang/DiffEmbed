@@ -8,6 +8,10 @@ from .eng.BrightPony import *
 from .eng.BrightTheoremqaTheorems import *
 from .eng.BrightStackOverflow import *
 from .eng.BrightTheoremqaQuestions import *
+from .eng.BrightEarthScience import *
+from .eng.BrightPsychology import *
+from .eng.BrightRobotics import *
+from .eng.BrightSustainableLiving import *
 
 from .ara.SadeemQuestionRetrieval import *
 from .code.AppsRetrieval import *

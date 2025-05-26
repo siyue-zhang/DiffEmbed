@@ -1,0 +1,190 @@
+query len mean:  83.83746875
+query len std:  89.39837591935498
+doc len mean:  281.38915625
+doc len std:  711.4742996648922
+total number of samples:  32000
+query len mean:  83.83746875
+query len std:  89.39837591935498
+doc len mean:  281.38915625
+doc len std:  711.4742996648922
+total number of samples:  32000
+query len mean:  83.83746875
+query len std:  89.39837591935498
+doc len mean:  281.38915625
+doc len std:  711.4742996648922
+total number of samples:  32000
+query len mean:  83.83746875
+query len std:  89.39837591935498
+doc len mean:  281.38915625
+doc len std:  711.4742996648922
+total number of samples:  32000
+merged McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp peft.
+initialize a new peft
+merged McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp peft.
+initialize a new peft
+merged McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp peft.
+initialize a new peft
+merged McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp peft.
+initialize a new peft
+Model's Lora trainable parameters:
+Model's Lora trainable parameters:
+Model's Lora trainable parameters:
+Model's Lora trainable parameters:
+trainable params: 41,943,040 || all params: 7,546,867,712 || trainable%: 0.5558
+trainable params: 41,943,040 || all params: 7,546,867,712 || trainable%: 0.5558
+trainable params: 41,943,040 || all params: 7,546,867,712 || trainable%: 0.5558
+trainable params: 41,943,040 || all params: 7,546,867,712 || trainable%: 0.5558
+{'loss': 4.1791, 'grad_norm': 43.68429183959961, 'learning_rate': 1e-05, 'epoch': 0.01}
+{'loss': 3.0535, 'grad_norm': 38.58803939819336, 'learning_rate': 1e-05, 'epoch': 0.02}
+{'loss': 2.0445, 'grad_norm': 17.60134506225586, 'learning_rate': 1e-05, 'epoch': 0.03}
+{'loss': 1.1728, 'grad_norm': 40.92647933959961, 'learning_rate': 1e-05, 'epoch': 0.04}
+{'loss': 0.8942, 'grad_norm': 23.63334083557129, 'learning_rate': 1e-05, 'epoch': 0.05}
+{'loss': 0.6752, 'grad_norm': 20.327987670898438, 'learning_rate': 1e-05, 'epoch': 0.06}
+{'loss': 0.5854, 'grad_norm': 21.99903106689453, 'learning_rate': 1e-05, 'epoch': 0.07}
+{'loss': 0.5924, 'grad_norm': 5.410755157470703, 'learning_rate': 1e-05, 'epoch': 0.08}
+{'loss': 0.3275, 'grad_norm': 0.029832422733306885, 'learning_rate': 1e-05, 'epoch': 0.09}
+{'loss': 0.5395, 'grad_norm': 0.13668708503246307, 'learning_rate': 1e-05, 'epoch': 0.1}
+{'loss': 0.3281, 'grad_norm': 1.0819755792617798, 'learning_rate': 1e-05, 'epoch': 0.11}
+{'loss': 0.3949, 'grad_norm': 0.0010267471661791205, 'learning_rate': 1e-05, 'epoch': 0.12}
+{'loss': 0.4284, 'grad_norm': 11.977622032165527, 'learning_rate': 1e-05, 'epoch': 0.13}
+{'loss': 0.347, 'grad_norm': 0.8355632424354553, 'learning_rate': 1e-05, 'epoch': 0.14}
+{'loss': 0.2717, 'grad_norm': 45.281185150146484, 'learning_rate': 1e-05, 'epoch': 0.15}
+{'loss': 0.3787, 'grad_norm': 0.871580183506012, 'learning_rate': 1e-05, 'epoch': 0.16}
+{'loss': 0.4268, 'grad_norm': 19.259180068969727, 'learning_rate': 1e-05, 'epoch': 0.17}
+{'loss': 0.2901, 'grad_norm': 4.511825084686279, 'learning_rate': 1e-05, 'epoch': 0.18}
+{'loss': 0.2922, 'grad_norm': 0.09906549006700516, 'learning_rate': 1e-05, 'epoch': 0.19}
+{'loss': 0.2742, 'grad_norm': 0.017489101737737656, 'learning_rate': 1e-05, 'epoch': 0.2}
+{'loss': 0.4402, 'grad_norm': 0.11522150784730911, 'learning_rate': 1e-05, 'epoch': 0.21}
+{'loss': 0.4757, 'grad_norm': 17.41853141784668, 'learning_rate': 1e-05, 'epoch': 0.22}
+{'loss': 0.2857, 'grad_norm': 4.14678955078125, 'learning_rate': 1e-05, 'epoch': 0.23}
+{'loss': 0.281, 'grad_norm': 3.515186071395874, 'learning_rate': 1e-05, 'epoch': 0.24}
+{'loss': 0.4258, 'grad_norm': 26.270605087280273, 'learning_rate': 1e-05, 'epoch': 0.25}
+{'loss': 0.2404, 'grad_norm': 0.01336879376322031, 'learning_rate': 1e-05, 'epoch': 0.26}
+{'loss': 0.3049, 'grad_norm': 0.02156672812998295, 'learning_rate': 1e-05, 'epoch': 0.27}
+{'loss': 0.3829, 'grad_norm': 0.6351019144058228, 'learning_rate': 1e-05, 'epoch': 0.28}
+{'loss': 0.2776, 'grad_norm': 6.765056133270264, 'learning_rate': 1e-05, 'epoch': 0.29}
+{'loss': 0.3995, 'grad_norm': 0.38424012064933777, 'learning_rate': 1e-05, 'epoch': 0.3}
+{'loss': 0.2647, 'grad_norm': 1.355387568473816, 'learning_rate': 1e-05, 'epoch': 0.31}
+{'loss': 0.3864, 'grad_norm': 2.875525951385498, 'learning_rate': 1e-05, 'epoch': 0.32}
+{'loss': 0.2148, 'grad_norm': 24.250261306762695, 'learning_rate': 1e-05, 'epoch': 0.33}
+{'loss': 0.2035, 'grad_norm': 0.08790343999862671, 'learning_rate': 1e-05, 'epoch': 0.34}
+{'loss': 0.2352, 'grad_norm': 0.0021970272064208984, 'learning_rate': 1e-05, 'epoch': 0.35}
+{'loss': 0.3032, 'grad_norm': 0.000711316941305995, 'learning_rate': 1e-05, 'epoch': 0.36}
+{'loss': 0.2195, 'grad_norm': 0.4997963011264801, 'learning_rate': 1e-05, 'epoch': 0.37}
+{'loss': 0.2744, 'grad_norm': 0.02430693991482258, 'learning_rate': 1e-05, 'epoch': 0.38}
+{'loss': 0.2642, 'grad_norm': 25.215225219726562, 'learning_rate': 1e-05, 'epoch': 0.39}
+{'loss': 0.2722, 'grad_norm': 0.005987121257930994, 'learning_rate': 1e-05, 'epoch': 0.4}
+{'loss': 0.2044, 'grad_norm': 0.34042829275131226, 'learning_rate': 1e-05, 'epoch': 0.41}
+{'loss': 0.2605, 'grad_norm': 0.007168483920395374, 'learning_rate': 1e-05, 'epoch': 0.42}
+{'loss': 0.229, 'grad_norm': 7.984691619873047, 'learning_rate': 1e-05, 'epoch': 0.43}
+{'loss': 0.2769, 'grad_norm': 56.299163818359375, 'learning_rate': 1e-05, 'epoch': 0.44}
+{'loss': 0.4343, 'grad_norm': 0.009449430741369724, 'learning_rate': 1e-05, 'epoch': 0.45}
+{'loss': 0.2858, 'grad_norm': 22.856407165527344, 'learning_rate': 1e-05, 'epoch': 0.46}
+{'loss': 0.3315, 'grad_norm': 0.03323594480752945, 'learning_rate': 1e-05, 'epoch': 0.47}
+{'loss': 0.2565, 'grad_norm': 1.7627947330474854, 'learning_rate': 1e-05, 'epoch': 0.48}
+{'loss': 0.2148, 'grad_norm': 7.588955879211426, 'learning_rate': 1e-05, 'epoch': 0.49}
+{'loss': 0.4041, 'grad_norm': 29.4991397857666, 'learning_rate': 1e-05, 'epoch': 0.5}
+{'loss': 0.2266, 'grad_norm': 1.1503422260284424, 'learning_rate': 1e-05, 'epoch': 0.51}
+{'loss': 0.266, 'grad_norm': 10.376202583312988, 'learning_rate': 1e-05, 'epoch': 0.52}
+{'loss': 0.3181, 'grad_norm': 77.57122802734375, 'learning_rate': 1e-05, 'epoch': 0.53}
+{'loss': 0.2558, 'grad_norm': 18.176565170288086, 'learning_rate': 1e-05, 'epoch': 0.54}
+{'loss': 0.204, 'grad_norm': 75.7481918334961, 'learning_rate': 1e-05, 'epoch': 0.55}
+{'loss': 0.2606, 'grad_norm': 0.00045145320473238826, 'learning_rate': 1e-05, 'epoch': 0.56}
+{'loss': 0.3022, 'grad_norm': 0.004175448324531317, 'learning_rate': 1e-05, 'epoch': 0.57}
+{'loss': 0.2382, 'grad_norm': 0.3549579083919525, 'learning_rate': 1e-05, 'epoch': 0.58}
+{'loss': 0.2396, 'grad_norm': 33.602657318115234, 'learning_rate': 1e-05, 'epoch': 0.59}
+{'loss': 0.3332, 'grad_norm': 0.02254438027739525, 'learning_rate': 1e-05, 'epoch': 0.6}
+{'loss': 0.3693, 'grad_norm': 0.44102805852890015, 'learning_rate': 1e-05, 'epoch': 0.61}
+{'loss': 0.2917, 'grad_norm': 0.006143174134194851, 'learning_rate': 1e-05, 'epoch': 0.62}
+{'loss': 0.3137, 'grad_norm': 82.22698974609375, 'learning_rate': 1e-05, 'epoch': 0.63}
+{'loss': 0.3167, 'grad_norm': 106.45065307617188, 'learning_rate': 1e-05, 'epoch': 0.64}
+{'loss': 0.2726, 'grad_norm': 50.041587829589844, 'learning_rate': 1e-05, 'epoch': 0.65}
+{'loss': 0.2179, 'grad_norm': 1.8633815050125122, 'learning_rate': 1e-05, 'epoch': 0.66}
+{'loss': 0.2244, 'grad_norm': 35.4818000793457, 'learning_rate': 1e-05, 'epoch': 0.67}
+{'loss': 0.281, 'grad_norm': 1.3455263376235962, 'learning_rate': 1e-05, 'epoch': 0.68}
+{'loss': 0.1888, 'grad_norm': 0.9205293655395508, 'learning_rate': 1e-05, 'epoch': 0.69}
+{'loss': 0.2944, 'grad_norm': 3.1220216751098633, 'learning_rate': 1e-05, 'epoch': 0.7}
+{'loss': 0.2739, 'grad_norm': 7.402667045593262, 'learning_rate': 1e-05, 'epoch': 0.71}
+{'loss': 0.2021, 'grad_norm': 0.19427405297756195, 'learning_rate': 1e-05, 'epoch': 0.72}
+{'loss': 0.2571, 'grad_norm': 0.0744548812508583, 'learning_rate': 1e-05, 'epoch': 0.73}
+{'loss': 0.2268, 'grad_norm': 0.47801899909973145, 'learning_rate': 1e-05, 'epoch': 0.74}
+{'loss': 0.235, 'grad_norm': 63.943790435791016, 'learning_rate': 1e-05, 'epoch': 0.75}
+{'loss': 0.2588, 'grad_norm': 78.85160827636719, 'learning_rate': 1e-05, 'epoch': 0.76}
+{'loss': 0.2348, 'grad_norm': 0.02762952819466591, 'learning_rate': 1e-05, 'epoch': 0.77}
+{'loss': 0.2717, 'grad_norm': 54.20918655395508, 'learning_rate': 1e-05, 'epoch': 0.78}
+{'loss': 0.2123, 'grad_norm': 19.353097915649414, 'learning_rate': 1e-05, 'epoch': 0.79}
+{'loss': 0.1813, 'grad_norm': 0.3645135164260864, 'learning_rate': 1e-05, 'epoch': 0.8}
+{'loss': 0.3021, 'grad_norm': 44.86666488647461, 'learning_rate': 1e-05, 'epoch': 0.81}
+{'loss': 0.2832, 'grad_norm': 31.743927001953125, 'learning_rate': 1e-05, 'epoch': 0.82}
+{'loss': 0.2313, 'grad_norm': 0.033415354788303375, 'learning_rate': 1e-05, 'epoch': 0.83}
+{'loss': 0.3, 'grad_norm': 0.5559718608856201, 'learning_rate': 1e-05, 'epoch': 0.84}
+{'loss': 0.3726, 'grad_norm': 7.3843255043029785, 'learning_rate': 1e-05, 'epoch': 0.85}
+{'loss': 0.1188, 'grad_norm': 17.564407348632812, 'learning_rate': 1e-05, 'epoch': 0.86}
+{'loss': 0.2441, 'grad_norm': 44.1563720703125, 'learning_rate': 1e-05, 'epoch': 0.87}
+{'loss': 0.2575, 'grad_norm': 0.001245754538103938, 'learning_rate': 1e-05, 'epoch': 0.88}
+{'loss': 0.1404, 'grad_norm': 43.67454528808594, 'learning_rate': 1e-05, 'epoch': 0.89}
+{'loss': 0.2413, 'grad_norm': 0.00016029526886995882, 'learning_rate': 1e-05, 'epoch': 0.9}
+{'loss': 0.2245, 'grad_norm': 5.047769069671631, 'learning_rate': 1e-05, 'epoch': 0.91}
+{'loss': 0.2706, 'grad_norm': 70.52693176269531, 'learning_rate': 1e-05, 'epoch': 0.92}
+{'loss': 0.2904, 'grad_norm': 0.04553011432290077, 'learning_rate': 1e-05, 'epoch': 0.93}
+{'loss': 0.2657, 'grad_norm': 52.312252044677734, 'learning_rate': 1e-05, 'epoch': 0.94}
+{'loss': 0.2148, 'grad_norm': 0.7949848771095276, 'learning_rate': 1e-05, 'epoch': 0.95}
+{'loss': 0.1813, 'grad_norm': 15.336859703063965, 'learning_rate': 1e-05, 'epoch': 0.96}
+{'loss': 0.1838, 'grad_norm': 27.747241973876953, 'learning_rate': 1e-05, 'epoch': 0.97}
+{'loss': 0.23, 'grad_norm': 0.00020508213492576033, 'learning_rate': 1e-05, 'epoch': 0.98}
+{'loss': 0.1776, 'grad_norm': 0.11536973714828491, 'learning_rate': 1e-05, 'epoch': 0.99}
+{'loss': 0.2421, 'grad_norm': 0.00467448215931654, 'learning_rate': 1e-05, 'epoch': 1.0}
+{'train_runtime': 7114.3513, 'train_samples_per_second': 4.498, 'train_steps_per_second': 0.281, 'train_loss': 0.39086592304706574, 'epoch': 1.0}
+[1;34mwandb[0m: 
+[1;34mwandb[0m: 🚀 View run [33mMeta-Llama-3-8B-ReasonIR-mix[0m at: [34mhttps://wandb.ai/siyue-zhang/ReasonIR/runs/n0qginrh[0m
+[1;34mwandb[0m: Find logs at: [1;35mwandb/run-20250525_223733-n0qginrh/logs[0m
+Running BrightBiology with LLM2Vec-Meta-Llama-3-8B-Instruct-mntp...
+enable_bidirectional:  True
+merged McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp peft.
+initialize /scratch/sz4651/Projects/diffusion_embedder/output/Meta-Llama-3-8B-ReasonIR-mix/ReasonIR_train_m-LLM2Vec-Meta-Llama-3-8B-Instruct-mntp_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-1e-05_lora_r-16/checkpoint-2000 peft.
+merged new peft.
+─────────────────────────────── Selected tasks  ────────────────────────────────
+Retrieval
+    - BrightBiology, s2p, multilingual 1 / 1 Subsets
+
+
+Running BrightEconomics with LLM2Vec-Meta-Llama-3-8B-Instruct-mntp...
+enable_bidirectional:  True
+merged McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp peft.
+initialize /scratch/sz4651/Projects/diffusion_embedder/output/Meta-Llama-3-8B-ReasonIR-mix/ReasonIR_train_m-LLM2Vec-Meta-Llama-3-8B-Instruct-mntp_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-1e-05_lora_r-16/checkpoint-2000 peft.
+merged new peft.
+─────────────────────────────── Selected tasks  ────────────────────────────────
+Retrieval
+    - BrightEconomics, s2p, multilingual 1 / 1 Subsets
+
+
+Running BrightStackOverflow with LLM2Vec-Meta-Llama-3-8B-Instruct-mntp...
+enable_bidirectional:  True
+merged McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp peft.
+initialize /scratch/sz4651/Projects/diffusion_embedder/output/Meta-Llama-3-8B-ReasonIR-mix/ReasonIR_train_m-LLM2Vec-Meta-Llama-3-8B-Instruct-mntp_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-1e-05_lora_r-16/checkpoint-2000 peft.
+merged new peft.
+─────────────────────────────── Selected tasks  ────────────────────────────────
+Retrieval
+    - BrightStackOverflow, s2p, multilingual 1 / 1 Subsets
+
+
+Running BrightTheoremqaTheorems with LLM2Vec-Meta-Llama-3-8B-Instruct-mntp...
+enable_bidirectional:  True
+merged McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp peft.
+initialize /scratch/sz4651/Projects/diffusion_embedder/output/Meta-Llama-3-8B-ReasonIR-mix/ReasonIR_train_m-LLM2Vec-Meta-Llama-3-8B-Instruct-mntp_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-1e-05_lora_r-16/checkpoint-2000 peft.
+merged new peft.
+─────────────────────────────── Selected tasks  ────────────────────────────────
+Retrieval
+    - BrightTheoremqaTheorems, s2p, multilingual 1 / 1 Subsets
+
+
+Running BrightEarthScience with LLM2Vec-Meta-Llama-3-8B-Instruct-mntp...
+enable_bidirectional:  True
+merged McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp peft.
+initialize /scratch/sz4651/Projects/diffusion_embedder/output/Meta-Llama-3-8B-ReasonIR-mix/ReasonIR_train_m-LLM2Vec-Meta-Llama-3-8B-Instruct-mntp_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-1e-05_lora_r-16/checkpoint-2000 peft.
+merged new peft.
+─────────────────────────────── Selected tasks  ────────────────────────────────
+Retrieval
+    - BrightEarthScience, s2p, multilingual 1 / 1 Subsets
+
+
