@@ -1,8 +1,8 @@
 #!/bin/bash
-#SBATCH --job-name=llama
+#SBATCH --job-name=dd
 #SBATCH --open-mode=append
-#SBATCH --output=./monitor/llama.out
-#SBATCH --error=./monitor/llama.err
+#SBATCH --output=./monitor/dd.out
+#SBATCH --error=./monitor/dd.err
 #SBATCH --export=ALL
 #SBATCH --time=48:00:00
 #SBATCH --gres=gpu:4
@@ -14,4 +14,4 @@ singularity exec --nv --overlay /scratch/sz4651/Projects/overlay-share2.ext3:ro 
 source ~/.bashrc \
 && source activate /scratch/sz4651/Projects/ext3/miniconda3/envs/diffusion_embedder \
 && cd /scratch/sz4651/Projects/diffusion_embedder \
-&& ./run.sh"
+&& ./run2.sh"

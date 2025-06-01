@@ -151,7 +151,7 @@ class ReasonIR(Dataset):
             data_map = new_data_map
 
             # equalize size for each one
-            keep = 1_000
+            keep = 10_000
             for dataset in data_map:
                 if len(data_map[dataset]) > keep:
                     data_map[dataset] = random.sample(data_map[dataset], keep)
@@ -198,10 +198,10 @@ class ReasonIR(Dataset):
         hq_dataset = hq_dataset.map(lambda x: process_pos_id2doc(x, id2doc))
         vl_dataset = load_dataset(self.aug_file_path, "vl")
 
-        hq_dataset = hq_dataset[self.split].shuffle(seed=42).select(range(10_000))
-        vl_dataset = vl_dataset[self.split].shuffle(seed=42).select(range(10_000))
+        # hq_dataset = hq_dataset[self.split].shuffle(seed=42).select(range(10_000))
+        vl_dataset = vl_dataset[self.split].shuffle(seed=42).select(range(100_000))
 
-        # hq_dataset = hq_dataset[self.split].shuffle(seed=42)
+        hq_dataset = hq_dataset[self.split].shuffle(seed=42)
         # vl_dataset = vl_dataset[self.split].shuffle(seed=42)
 
         self.all_samples = defaultdict(lambda: [])
