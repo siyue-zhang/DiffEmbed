@@ -108,6 +108,19 @@ python experiments/mteb_eval_custom.py \
 > Hints: remeber to check the GPU ids set in experiments/mteb_eval_custom.py.
 
 
+## Citation
 
+If you use the dataset in your work, please kindly cite the paper:
+```
+@misc{zhang2025diffusionvsautoregressivelanguage,
+      title={Diffusion vs. Autoregressive Language Models: A Text Embedding Perspective}, 
+      author={Siyue Zhang and Yilun Zhao and Liyuan Geng and Arman Cohan and Anh Tuan Luu and Chen Zhao},
+      year={2025},
+      eprint={2505.15045},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2505.15045}, 
+}
+```
 
 
