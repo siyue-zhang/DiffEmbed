@@ -1,9 +1,0 @@
-Running BrightLeetcode with Dream_emb...
-enable_bidirectional:  True
-initialize /scratch/sz4651/Projects/diffusion_embedder/output/Dream-ReasonIR-mix-large/ReasonIR_train_m-Dream_emb_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-1e-05_lora_r-16/checkpoint-20033 peft.
-merged new peft.
-─────────────────────────────── Selected tasks  ────────────────────────────────
-Retrieval
-    - BrightLeetcode, s2p, multilingual 1 / 1 Subsets
-
-
