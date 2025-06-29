@@ -1,9 +1,6 @@
 # *Diffusion vs. Autoregressive Language Models: A Text Embedding Perspective* 
 
-
-[![arxiv](https://img.shields.io/badge/arXiv-2404.05961-b31b1b.svg)](https://arxiv.org/pdf/2505.15045)
-[![HF Link](https://img.shields.io/badge/HF%20Models-LLM2Vec-FFD21E.svg)](https://huggingface.co/datasets/siyue/ReasonAug)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/siyue-zhang/diffusion_embedder/blob/master/LICENSE)
+[**📖 arXiv**](https://arxiv.org/pdf/2505.15045) | [**🤗 Dataset**](https://huggingface.co/datasets/siyue/ReasonAug) 
 
 
 Diffusion Embedder is a simple recipe to train text encoders directly from diffusion LMs without the need of any transformation step. Diffusion LMs naturally possess bidirectional attention, which is a perfect fit for text embeddings. 
