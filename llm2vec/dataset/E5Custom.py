@@ -205,7 +205,7 @@ class E5Custom(Dataset):
             data_map = new_data_map
 
             # equalize size for each one
-            keep = 3000
+            keep = 6000
             for dataset in data_map:
                 if len(data_map[dataset])>keep:
                     data_map[dataset] = random.sample(data_map[dataset],keep)
@@ -253,20 +253,20 @@ class E5Custom(Dataset):
                     ))
          
         self.data = []
-        for dataset in self.all_samples:
-            while len(self.all_samples[dataset])>=self.effective_batch_size:
-                popped_items = []
-                for _ in range(self.effective_batch_size):
-                    random_index = random.randint(0, len(self.all_samples[dataset]) - 1)
-                    popped_items.append(self.all_samples[dataset].pop(random_index))
-                self.data.append(popped_items)
+        # for dataset in self.all_samples:
+        #     while len(self.all_samples[dataset])>=self.effective_batch_size:
+        #         popped_items = []
+        #         for _ in range(self.effective_batch_size):
+        #             random_index = random.randint(0, len(self.all_samples[dataset]) - 1)
+        #             popped_items.append(self.all_samples[dataset].pop(random_index))
+        #         self.data.append(popped_items)
 
-        random.shuffle(self.data)
+        # random.shuffle(self.data)
         
         logger.info(f"Loaded {len(self.data)*self.effective_batch_size} augmented samples.")
         
         if self.add_e5:
-            e5 = random.sample(all_batches, int(30000/self.effective_batch_size))
+            e5 = random.sample(all_batches, int(60000/self.effective_batch_size))
             tmp = []
             for batch in e5:
                 tmp.append([all_samples[idx] for idx in batch])

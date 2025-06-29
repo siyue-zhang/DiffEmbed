@@ -12,7 +12,7 @@ from util import get_related_strings, write_jsonl
 
 
 
-file_path = "/home/siyue/Projects/diffusion_embedder/TheoremAug/gen_problem_solution/before_hard_negative_tmp.pkl"
+file_path = "/home/siyue/Projects/diffusion_embedder/ReasonAug/gen_problem_solution/before_hard_negative_tmp.pkl"
 
 # Load from a file
 with open(file_path, "rb") as file:
@@ -294,6 +294,6 @@ print(Counter([d['task_type'] for d in finals]))
 print(len(finals))
 print('\n')
 
-file_path = 'TheoremAug_test.jsonl'
+file_path = 'ReasonAug.jsonl'
 write_jsonl(file_path, finals)
 

@@ -8,22 +8,9 @@ from copy import deepcopy
 import bm25s
 
 import sys
-sys.path.append("/home/siyue001/Projects/llm2vec_reason_dream/TheoremAug/")
+sys.path.append("/home/siyue/Projects/diffusion_embedder/ReasonAug")
 from instances import *
 from util import separate, load_jsonl, write_jsonl
-
-
-# file_path = '../gen_problem_solution/check_solution_input.jsonl'
-# data_path = '../gen_problem_solution/check_problem_solution_tmp.jsonl'
-# ids = [d['custom_id'] for d in load_jsonl(file_path)]
-
-# before_problem_by_instance = defaultdict(list)
-# for example in load_jsonl(data_path):
-#     if str(example['id']) in ids:
-#         instance = example['instance']
-#         problem = example['problem']
-#         if problem not in before_problem_by_instance[instance]:
-#             before_problem_by_instance[instance].append(problem)
 
 
 file_path = "../gen_problem_solution/before_hard_negative_tmp.pkl"
@@ -125,10 +112,6 @@ for instance, pairs in pairs_by_instance.items():
             if len(negatives_by_problem[problem])==n_neg:
                 break
 
-        # if instance == "Kahn's Algorithm":
-        #     print(skip_instances, skip_k)
-        #     print(negatives_instance_by_problem[problem])
-        #     assert 1==2
 
     for problem in problems:
         while len(negatives_by_problem[problem])>0:
@@ -348,35 +331,6 @@ for instance, pairs in pairs_by_instance.items():
         }
         examples_by_task[task].append(res)
 
-        # # p(s)2ps
-        
-        # pair_combinations = list(permutations(range(len(problems)), 2))
-        # for query_idx, pos_idx in pair_combinations:
-        #     task = random.choice(['p2ps', 'ps2ps'])
-        #     query_problem = problems[query_idx]
-        #     query_solution = solutions[query_idx]
-        #     pos_problem = problems[pos_idx]
-        #     pos_solution = solutions[pos_idx]
-        #     if question_type=='coding':
-        #         pos = pos_solution
-        #     else:
-        #         pos = pos_problem+'\n'+pos_solution
-        #     if task == 'p2ps':
-        #         user_query = query_problem
-        #     else:
-        #         user_query = query_problem+'\n'+query_solution
-        #     res = {
-        #         'instance': instance,
-        #         'domain': domain,
-        #         'question_type': question_type,
-        #         'reference': reference,
-        #         'user_query': user_query,
-        #         'positive_document': pos,
-        #         'hard_negative_document': None,
-        #         'negative_instance': None,
-        #     }
-
-        #     examples_by_task[task].append(res)
 
 
 def get_instruct_map(domain, question_type):
@@ -471,39 +425,5 @@ file_path = 'gen_hard_negative_input.jsonl'
 write_jsonl(file_path, requests)
 
 
-
-
-# for task, examples in examples_by_task.items():
-
-#     for example in examples:
-#         if example['domain']=='physics theorem' and random.random() > 0.2:
-#             continue
-#         if task =='p2ps' and random.random() > 0.7:
-#             continue
-#         if task == 'ps2ps' and random.random() > 0.3:
-#             continue
-#         if example['domain']=='finance formula' and example['instance'] not in F:
-#             continue
-
-#         # if example['domain'] not in ['algorithm', 'data structure']:
-#         #     continue
-#         # if task != 'p2ps':
-#         #     continue
-
-#         if task not in ['p2i','i2ps']:
-#             continue
-
-#         final = {
-#             'domain': example['domain'],
-#             'instance': example['instance'],
-#             'task_type': task,
-#             'task': get_instruct_map(example['domain'], example['question_type'])[task],
-#             'user_query': example['user_query'],
-#             'positive_document': example['positive_document'],
-#             'hard_negative_document': example['hard_negative_document'],
-#             'negative_instance': example['negative_instance']
-#         }
-
-#         finals.append(final)
 
 

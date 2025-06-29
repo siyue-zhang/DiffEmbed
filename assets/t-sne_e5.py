@@ -3,7 +3,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 
 import torch
 from llm2vec import LLM2Vec
-from TheoremAug.util import load_jsonl
+from ReasonAug.util import load_jsonl
 import numpy as np
 from sklearn.manifold import TSNE
 
@@ -41,7 +41,7 @@ max_length = 4096
 
 
 # Load data
-data_path = '/home/siyue/Projects/diffusion_embedder/TheoremAug/TheoremAug.jsonl'
+data_path = '/home/siyue/Projects/diffusion_embedder/ReasonAug/ReasonAug.jsonl'
 data = load_jsonl(data_path)
 
 # Define instances to process

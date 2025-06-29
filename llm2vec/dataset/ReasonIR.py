@@ -64,7 +64,7 @@ class ReasonIR(Dataset):
         dataset_name: str = "ReasonIR",
         split: str = "train",
         file_path: str = None,
-        effective_batch_size: int = 32,
+        effective_batch_size: int = 16,
         shuffle_individual_datasets: bool = True,
         separator: str = "!@#$%^&*()",
         aug_file_path: str = "reasonir/reasonir-data",
@@ -151,7 +151,7 @@ class ReasonIR(Dataset):
             data_map = new_data_map
 
             # equalize size for each one
-            keep = 10_000
+            keep = 3_000
             for dataset in data_map:
                 if len(data_map[dataset]) > keep:
                     data_map[dataset] = random.sample(data_map[dataset], keep)
@@ -198,10 +198,10 @@ class ReasonIR(Dataset):
         hq_dataset = hq_dataset.map(lambda x: process_pos_id2doc(x, id2doc))
         vl_dataset = load_dataset(self.aug_file_path, "vl")
 
-        # hq_dataset = hq_dataset[self.split].shuffle(seed=42).select(range(10_000))
-        vl_dataset = vl_dataset[self.split].shuffle(seed=42).select(range(100_000))
+        hq_dataset = hq_dataset[self.split].shuffle(seed=42).select(range(20_000))
+        vl_dataset = vl_dataset[self.split].shuffle(seed=42).select(range(10_000))
 
-        hq_dataset = hq_dataset[self.split].shuffle(seed=42)
+        # hq_dataset = hq_dataset[self.split].shuffle(seed=42)
         # vl_dataset = vl_dataset[self.split].shuffle(seed=42)
 
         self.all_samples = defaultdict(lambda: [])
@@ -237,12 +237,19 @@ class ReasonIR(Dataset):
         
         logger.info(f"Loaded {len(self.data)*self.effective_batch_size} augmented samples.")
         
-        if self.add_e5:
-            tmp = []
-            for batch in all_batches:
-                tmp.append([all_samples[idx] for idx in batch])
-            self.data += tmp
+        # if self.add_e5:
+        #     tmp = []
+        #     for batch in all_batches:
+        #         tmp.append([all_samples[idx] for idx in batch])
+        #     self.data += tmp
 
+        if self.add_e5:
+            e5 = random.sample(all_batches, int(30000/self.effective_batch_size))
+            tmp = []
+            for batch in e5:
+                tmp.append([all_samples[idx] for idx in batch])
+            e5 = tmp
+            self.data += e5
 
         random.shuffle(self.data)
         self.data = [item for sublist in self.data for item in sublist]

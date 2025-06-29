@@ -193,3 +193,10 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+eval_eng.sh
+eval_steps.sh
+run2.sh
+eval.sh
+gpu_job.slurm
+wandb/

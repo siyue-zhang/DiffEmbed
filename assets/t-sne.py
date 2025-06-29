@@ -3,12 +3,12 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 
 import torch
 from llm2vec import LLM2Vec
-from TheoremAug.util import load_jsonl
+from ReasonAug.util import load_jsonl
 import numpy as np
 from sklearn.manifold import TSNE
 
 # Load data
-data_path = '/home/siyue/Projects/diffusion_embedder/TheoremAug/TheoremAug.jsonl'
+data_path = '/home/siyue/Projects/diffusion_embedder/ReasonAug/ReasonAug.jsonl'
 data = load_jsonl(data_path)
 
 # Define instances to process
@@ -19,13 +19,13 @@ instances = ["Vieta's Formulas", "Pigeonhole Principle", "Euler's Identity", "Ce
 # l2v = LLM2Vec.from_pretrained(
 #     "McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp",
 #     # peft_model_name_or_path="McGill-NLP/LLM2Vec-Meta-Llama-3-8B-Instruct-mntp-unsup-simcse",
-#     # peft_model_name_or_path="/home/siyue001/Projects/llm2vec_reason_dream/output/simcse/Meta-Llama-3-8B-Instruct-mntp-simcse-TheoremAug-4omini-all-v0.2/E5Mix_train_m-Meta-Llama-3-8B-Instruct_p-mean_b-32_l-3000_bidirectional-True_e-3_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-800",
+#     # peft_model_name_or_path="/home/siyue001/Projects/llm2vec_reason_dream/output/simcse/Meta-Llama-3-8B-Instruct-mntp-simcse-ReasonAug-4omini-all-v0.2/E5Mix_train_m-Meta-Llama-3-8B-Instruct_p-mean_b-32_l-3000_bidirectional-True_e-3_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-800",
 #     device_map="cuda" if torch.cuda.is_available() else "cpu",
 #     torch_dtype=torch.bfloat16,
 # )
 l2v = LLM2Vec.from_pretrained(
     "siyue/Dream_emb",
-    peft_model_name_or_path="/home/siyue/Projects/diffusion_embedder/output/!Dream-TheoremAug/E5Mix_train_m-Dream_emb_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-680",
+    peft_model_name_or_path="/home/siyue/Projects/diffusion_embedder/output/!Dream-ReasonAug/E5Mix_train_m-Dream_emb_p-mean_b-16_l-4096_bidirectional-True_e-1_s-42_w-100_lr-0.0001_lora_r-16/checkpoint-680",
     device_map="cuda" if torch.cuda.is_available() else "cpu",
     torch_dtype=torch.bfloat16,
 )
