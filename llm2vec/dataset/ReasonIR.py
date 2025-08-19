@@ -198,7 +198,7 @@ class ReasonIR(Dataset):
         hq_dataset = hq_dataset.map(lambda x: process_pos_id2doc(x, id2doc))
         vl_dataset = load_dataset(self.aug_file_path, "vl")
 
-        hq_dataset = hq_dataset[self.split].shuffle(seed=42).select(range(20_000))
+        hq_dataset = hq_dataset[self.split].shuffle(seed=42).select(range(10_000))
         vl_dataset = vl_dataset[self.split].shuffle(seed=42).select(range(10_000))
 
         # hq_dataset = hq_dataset[self.split].shuffle(seed=42)
@@ -206,6 +206,7 @@ class ReasonIR(Dataset):
 
         self.all_samples = defaultdict(lambda: [])
         for data in [hq_dataset, vl_dataset]:
+        # for data in [hq_dataset, ]:
             for example in data:
                 instruction = example['query'][0]
                 instruction = instruction.strip()
@@ -236,7 +237,77 @@ class ReasonIR(Dataset):
 
         
         logger.info(f"Loaded {len(self.data)*self.effective_batch_size} augmented samples.")
-        
+
+
+#############################################
+
+        ## NEW
+        with open("/home/siyue/Projects/diffusion_embedder/ReasonAug/ReasonAug.jsonl", "r", encoding="utf-8") as f:
+            augment_samples = f.readlines()
+        augment_samples = [json.loads(d) for d in augment_samples]
+        print('total number: ', len(augment_samples))
+        ##
+
+        domain_map = {
+            'aops': ['math'],
+            'leetcode': ['coding'],
+            'theoremqa': ['math','physics','finance'],
+            'all':['math','physics','finance','coding','math']
+        }
+        domain_question_mapping = {
+            'algorithm': 'coding',
+            'data structure': 'coding',
+            'math theorem': 'math',
+            'physics theorem': 'physics',
+            'finance formula': 'finance',
+        }
+
+        self.all_samples = defaultdict(lambda: [])
+
+        for id_, augment_sample in enumerate(augment_samples):
+            # domain filter
+            sample_domain = augment_sample['domain']
+            sample_domain_type = domain_question_mapping[sample_domain]
+            #
+            # if sample_domain == 'data structure':
+            #     continue
+            #
+            # if sample_domain_type not in domain_map[self.domain]:
+            #     continue
+            if augment_sample['hard_negative_document'] == None:
+                continue
+            # task filter
+            # if self.task != 'all' and augment_sample['task_type'] != self.task:
+            #     continue
+
+            instruction = augment_sample["task"]
+            query = f"{instruction}; " + self.separator + augment_sample["user_query"]
+            pos = self.separator + augment_sample["positive_document"]
+            neg = self.separator + augment_sample["hard_negative_document"]
+            self.all_samples[instruction].append(DataSample(
+                        id_=id_,
+                        query=query,
+                        positive=pos,
+                        negative=neg,
+                        task_name='augment',
+                        pos_instance=augment_sample['instance'],
+                        neg_instance=augment_sample['negative_instance'],
+                        batch_negatives=None
+                    ))
+         
+
+        for dataset in self.all_samples:
+            while len(self.all_samples[dataset])>=self.effective_batch_size:
+                popped_items = []
+                for _ in range(self.effective_batch_size):
+                    random_index = random.randint(0, len(self.all_samples[dataset]) - 1)
+                    popped_items.append(self.all_samples[dataset].pop(random_index))
+                self.data.append(popped_items)
+
+
+###############################################
+
+
         # if self.add_e5:
         #     tmp = []
         #     for batch in all_batches:
@@ -244,7 +315,7 @@ class ReasonIR(Dataset):
         #     self.data += tmp
 
         if self.add_e5:
-            e5 = random.sample(all_batches, int(30000/self.effective_batch_size))
+            e5 = random.sample(all_batches, int(10000/self.effective_batch_size))
             tmp = []
             for batch in e5:
                 tmp.append([all_samples[idx] for idx in batch])
