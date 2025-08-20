@@ -198,7 +198,7 @@ class ReasonIR(Dataset):
         hq_dataset = hq_dataset.map(lambda x: process_pos_id2doc(x, id2doc))
         vl_dataset = load_dataset(self.aug_file_path, "vl")
 
-        hq_dataset = hq_dataset[self.split].shuffle(seed=42).select(range(10_000))
+        hq_dataset = hq_dataset[self.split].shuffle(seed=42).select(range(1_000))
         vl_dataset = vl_dataset[self.split].shuffle(seed=42).select(range(10_000))
 
         # hq_dataset = hq_dataset[self.split].shuffle(seed=42)
